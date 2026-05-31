@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { navLinks, WaIcon } from "@/lib/helper";
+import { navLinks, WaIcon, socialLinks } from "@/lib/helper";
 import { MapPin, Phone, Mail, ArrowRight } from "lucide-react";
 
 const emirates = ["Dubai","Abu Dhabi","Sharjah","Ajman","Ras Al Khaimah","Fujairah"];
@@ -9,6 +9,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#060e1f] text-white">
       <div className="h-px bg-linear-to-r from-transparent via-accent to-transparent opacity-40" />
+
       <div className="container-site pt-16 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
 
@@ -25,14 +26,17 @@ export default function Footer() {
                 <span className="text-accent text-[10px] tracking-[0.2em] uppercase">Connect</span>
               </div>
             </Link>
+
             <p className="text-white/40 text-sm leading-relaxed mb-6 max-w-xs">
               Connecting you with verified, commission-free mortgage professionals across the UAE — fast, transparent, and free to use.
             </p>
+
+            {/* WhatsApp */}
             <a
               href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-whatsapp/30 text-whatsapp text-xs font-medium hover:bg-whatsapp/10 transition-colors duration-200"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-whatsapp/30 text-whatsapp text-xs font-medium hover:bg-whatsapp/10 transition-colors duration-200 mb-5"
             >
               <WaIcon />
               Chat on WhatsApp
@@ -42,10 +46,13 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h4 className="text-white font-semibold text-sm tracking-wide mb-5">Quick Links</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-3 columns-2 md:columns-1">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="group flex items-center gap-2 text-white/40 text-sm hover:text-accent transition-colors duration-200">
+                  <Link
+                    href={link.href}
+                    className="group flex items-center gap-2 text-white/40 text-sm hover:text-accent transition-colors duration-200"
+                  >
                     <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-200" />
                     {link.label}
                   </Link>
@@ -57,7 +64,7 @@ export default function Footer() {
           {/* Emirates */}
           <div>
             <h4 className="text-white font-semibold text-sm tracking-wide mb-5">Emirates We Cover</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-3 columns-2 md:columns-1">
               {emirates.map((e) => (
                 <li key={e} className="flex items-center gap-2 text-white/40 text-sm">
                   <span className="w-1 h-1 rounded-full bg-accent/50 shrink-0" />
@@ -72,24 +79,45 @@ export default function Footer() {
             <h4 className="text-white font-semibold text-sm tracking-wide mb-5">Contact</h4>
             <ul className="space-y-4">
               <li>
-                <a href={`tel:${process.env.NEXT_PUBLIC_PHONE}`} className="flex items-start gap-3 text-white/40 text-sm hover:text-white transition-colors duration-200 group">
+                <a
+                  href={`tel:${process.env.NEXT_PUBLIC_PHONE}`}
+                  className="flex items-start gap-3 text-white/40 text-sm hover:text-white transition-colors duration-200"
+                >
                   <Phone size={14} className="mt-0.5 shrink-0 text-accent" />
-                  +971 50 564 9126
+                  {process.env.NEXT_PUBLIC_PHONE}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${process.env.NEXT_PUBLIC_EMAIL}`} className="flex items-start gap-3 text-white/40 text-sm hover:text-white transition-colors duration-200 group">
+                <a
+                  href={`mailto:${process.env.NEXT_PUBLIC_EMAIL}`}
+                  className="flex items-start gap-3 text-white/40 text-sm hover:text-white transition-colors duration-200"
+                >
                   <Mail size={14} className="mt-0.5 shrink-0 text-accent" />
-                  info@mortgageconnect.ae
+                  {process.env.NEXT_PUBLIC_EMAIL}
                 </a>
               </li>
               <li>
                 <div className="flex items-start gap-3 text-white/40 text-sm">
                   <MapPin size={14} className="mt-0.5 shrink-0 text-accent" />
-                  <span>Floor 2, Office 18, Aspen Commercial Tower, Sheikh Zayed Road, Dubai, UAE</span>
+                  <span>{process.env.NEXT_PUBLIC_ADDRESS}</span>
                 </div>
               </li>
             </ul>
+            {/* Social icons */}
+            <div className="flex items-center gap-4 mt-4">
+              {socialLinks.map(({ label, href, icon: Icon, hoverColor }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className={`w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/40 transition-all duration-200 ${hoverColor} hover:bg-white/5`}
+                >
+                  <Icon />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -97,8 +125,14 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-white/25 text-xs">© {year} Mortgage Connect. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            {["Privacy Policy","Terms of Use"].map((item) => (
-              <Link key={item} href="#" className="text-white/25 text-xs hover:text-white/60 transition-colors duration-200">{item}</Link>
+            {["Privacy Policy", "Terms of Use"].map((item) => (
+              <Link
+                key={item}
+                href="#"
+                className="text-white/25 text-xs hover:text-white/60 transition-colors duration-200"
+              >
+                {item}
+              </Link>
             ))}
           </div>
         </div>
