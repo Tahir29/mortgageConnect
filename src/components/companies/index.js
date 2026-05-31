@@ -1,0 +1,5 @@
+export { default as BankPartners } from './BankPartners'
+export { default as CompaniesGrid } from './CompaniesGrid'
+export { default as CompaniesHero } from './CompaniesHero'
+export { default as CompanyCard } from './CompanyCard'
+export { default as CompanyStats } from './CompanyStats'
