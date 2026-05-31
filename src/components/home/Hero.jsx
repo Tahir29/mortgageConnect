@@ -78,7 +78,7 @@ export default function Hero() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 animate-fade-in animation-delay-700">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 md:flex flex-col items-center gap-2 opacity-40 animate-fade-in animation-delay-700 hidden">
           <span className="text-white text-[10px] tracking-widest uppercase">Scroll</span>
           <div className="w-0.5 h-12 bg-white/20 rounded-full overflow-hidden relative">
             <div className="absolute top-0 left-0 w-full h-1/2 bg-linear-to-b from-white to-transparent rounded-full animate-scroll-down" />

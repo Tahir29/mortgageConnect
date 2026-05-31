@@ -60,7 +60,7 @@ export default function AgentCard({ agent, index, visible }) {
           </div>
         </div>
         <div className="h-px bg-gray-100 mb-5" />
-        <div className="flex gap-2">          
+        <div className="flex gap-0.5 md:gap-2">          
           <a
             href={`mailto:${agent.email}`}
             className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-foreground/5 border border-foreground/15 text-foreground text-xs font-semibold hover:bg-foreground hover:text-white hover:border-foreground transition-all duration-200"
