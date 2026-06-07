@@ -38,7 +38,7 @@ export default function FeaturedAgents() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {agents.slice(0, 3).map((agent, i) => (
-            <AgentCard key={agent.id} agent={agent} index={i} visible={visible} />
+            <AgentCard key={i} agent={agent} index={i} visible={visible} />
           ))}
         </div>
       </div>

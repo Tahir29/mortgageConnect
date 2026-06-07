@@ -105,7 +105,7 @@ export default function FilterBar({
 
           {/* Four dropdowns */}
           <div className="flex flex-wrap gap-3 flex-1">
-            <FilterDropdown label="Specialty" options={specialties} value={specialty} onChange={setSpecialty} />
+            {/* <FilterDropdown label="Specialty" options={specialties} value={specialty} onChange={setSpecialty} /> */}
             <FilterDropdown label="Location"  options={locations}   value={location}  onChange={setLocation}  />
             <FilterDropdown label="Language"  options={languages}   value={language}  onChange={setLanguage}  />
             <FilterDropdown label="Company"   options={companies}   value={company}   onChange={setCompany}   />

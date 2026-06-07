@@ -1,4 +1,5 @@
-import { Star, Phone, MessageCircle, Mail, Globe } from "lucide-react";
+import { Star, Phone, MessageCircle, Mail, Globe, TrendingUp } from "lucide-react";
+import { LinkedInIcon } from "@/lib/helper"
 
 function Stars({ rating }) {
   return (
@@ -22,9 +23,21 @@ export default function AgentCard({ agent, index, visible }) {
       {/* Card top */}
       <div className="relative h-28 bg-linear-to-br from-foreground to-brand-navy-light">
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
-        <span className="absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-accent/15 text-accent border border-accent/30">
+        <span className="absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide uppercase hidden bg-accent/15 text-accent border border-accent/30">
           {agent.specialty}
         </span>
+        {agent.linkedin && (
+          <a
+            href={agent.linkedin.trim()}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${agent.name} on LinkedIn`}
+            onClick={(e) => e.stopPropagation()}
+            className="absolute top-4 right-4 w-7 h-7 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/60 hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white transition-all duration-200"
+          >
+            <LinkedInIcon />
+          </a>
+        )}
         <span className="absolute top-4 left-4 flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-medium">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           Verified
@@ -43,8 +56,8 @@ export default function AgentCard({ agent, index, visible }) {
       {/* Card body */}
       <div className="pt-14 px-6 pb-6">
         <h3 className="font-display text-lg font-semibold text-foreground leading-tight">{agent.name}</h3>
-        <p className="text-accent text-xs font-medium tracking-wide mt-1 mb-3">{agent.role}</p>
-        <div className="flex items-center gap-2 mb-4">
+        <p className="text-accent text-xs font-medium tracking-wide mt-1 mb-4">{agent.role}</p>
+        <div className="items-center gap-2 mb-4 hidden">
           <Stars rating={agent.rating} />
           <span className="text-foreground text-xs font-semibold">{agent.rating}</span>
           <span className="text-gray-400 text-xs">({agent.reviews} reviews)</span>
@@ -57,6 +70,17 @@ export default function AgentCard({ agent, index, visible }) {
           <div className="flex items-center gap-2 text-xs text-gray-500">
             <span className="w-2 h-2 rounded-full bg-foreground/20 shrink-0" />
             <span>{agent.location} · {agent.experience} Experience</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs h-auto md:min-h-4.5">
+            {agent.business ? (
+              <>
+                <TrendingUp size={12} className="text-accent shrink-0" />
+                <span className="text-gray-500 truncate">{agent.business}</span>
+              </>
+            ) : (
+              // Empty placeholder — keeps spacing identical
+              <span className="invisible select-none hidden md:block">—</span>
+            )}
           </div>
         </div>
         <div className="h-px bg-gray-100 mb-5" />

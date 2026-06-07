@@ -125,13 +125,12 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-white/25 text-xs">© {year} Mortgage Connect. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            {["Privacy Policy", "Terms of Use"].map((item) => (
-              <Link
-                key={item}
-                href="#"
-                className="text-white/25 text-xs hover:text-white/60 transition-colors duration-200"
-              >
-                {item}
+            {[
+              { label: "Privacy Policy", href: "/privacy-policy" },
+              { label: "Terms of Use",   href: "/terms-of-use"   },
+            ].map((item) => (
+              <Link key={item.label} href={item.href} className="text-white/25 text-xs hover:text-white/60 transition-colors duration-200">
+                {item.label}
               </Link>
             ))}
           </div>

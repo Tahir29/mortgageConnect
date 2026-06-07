@@ -266,7 +266,7 @@ export default function MortgageCalculator() {
 
             {/* CTA */}
             <Link
-              href="/agents"
+              href="/our-agents"
               className="group flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-foreground text-white font-semibold text-sm tracking-wide hover:bg-brand-navy-light transition-all duration-300"
             >
               Talk to a Mortgage Expert
