@@ -34,7 +34,7 @@ export const agents = [
     location: "Dubai",
     rating: 4.9,
     reviews: 51,
-    experience: "6 Months",
+    experience: "1 Year 2 Months",
     business: "2.3M Per month Approx",
     phone: "+971 58 583 0776",
     whatsapp: "971585830776",
