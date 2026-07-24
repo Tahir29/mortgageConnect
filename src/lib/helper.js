@@ -112,20 +112,20 @@ export const agents = [
     specialty: "Islamic Finance"
   },
   {
-    name: "Dhanwanti Vanwani",
+    name: "Kiran Vinodan",
     role: "Mortgage Consultant",
-    company: "Finance Point",
-    languages: ["English", "Hindi", "Sindhi", "Gujarati"],
+    company: "Baytech Mortgage Broker",
+    languages: ["English", "Malyalam", "Hindi", "Tamil"],
     location: "Dubai",
     rating: 4.8,
     reviews: 22,
-    experience: "15 Months",
-    business: "2M per Month Approx, 10M Yearly",
+    experience: "1 Year 6 Months",
+    business: "75M Yearly",
     phone: "+971 56 979 6848",
     whatsapp: "971569796848",
-    email: "divya@financepoint.ae",
-    linkedin: "https://www.linkedin.com/in/dhanwanti-divya-vanwani-64545321b/",
-    image: "",
+    email: "kiran@baytech-uae.com",
+    linkedin: "https://www.linkedin.com/in/kiran-vinodan-a38524161",
+    image: "/images/agents/Kiran-Vinodan.jpeg",
     specialty: "Home Finance"
   },
   // {
