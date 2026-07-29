@@ -131,7 +131,7 @@ export const agents = [
   {
     name: "Raghuveer Singh",
     role: "Mortgage Consultant",
-    company: "Ultra Financials",
+    company: "Ultran Financials",
     languages: ["English", "Hindi"],
     location: "Dubai",
     rating: 4.8,
@@ -148,7 +148,7 @@ export const agents = [
   {
     name: "Kapil Pandey",
     role: "Mortgage Consultant",
-    company: "Ultra Financials",
+    company: "Ultran Financials",
     languages: ["English", "Hindi"],
     location: "Dubai",
     rating: 4.8,
@@ -165,7 +165,7 @@ export const agents = [
   {
     name: "Manoj Kuchan",
     role: "Mortgage Consultant",
-    company: "Ultra Financials",
+    company: "Ultran Financials",
     languages: ["English", "Hindi", "Marathi", "Telugu"],
     location: "Dubai",
     rating: 4.8,
