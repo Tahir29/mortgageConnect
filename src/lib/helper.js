@@ -131,7 +131,7 @@ export const agents = [
   {
     name: "Raghuveer Singh",
     role: "Mortgage Consultant",
-    company: "Ultran Financials",
+    company: "Ultron Financials",
     languages: ["English", "Hindi"],
     location: "Dubai",
     rating: 4.8,
@@ -148,7 +148,7 @@ export const agents = [
   {
     name: "Kapil Pandey",
     role: "Mortgage Consultant",
-    company: "Ultran Financials",
+    company: "Ultron Financials",
     languages: ["English", "Hindi"],
     location: "Dubai",
     rating: 4.8,
@@ -165,7 +165,7 @@ export const agents = [
   {
     name: "Manoj Kuchan",
     role: "Mortgage Consultant",
-    company: "Ultran Financials",
+    company: "Ultron Financials",
     languages: ["English", "Hindi", "Marathi", "Telugu"],
     location: "Dubai",
     rating: 4.8,
@@ -177,6 +177,23 @@ export const agents = [
     email: "manojkuchandxb@gmail.com",
     linkedin: "https://www.linkedin.com/in/manoj-kuchan317/",
     image: "/images/agents/Manoj-Kuchan.jpeg",
+    specialty: "Home Finance"
+  },
+  {
+    name: "Devon Mundi Nze",
+    role: "Mortgage Consultant",
+    company: "Prime Mortgages LLC",
+    languages: ["English", "French"],
+    location: "Dubai",
+    rating: 4.8,
+    reviews: 22,
+    experience: "2 Years",
+    business: "34M Yearly",
+    phone: "+971 56 341 1797",
+    whatsapp: "971563411797",
+    email: "devonmundi7@gmail.com",
+    linkedin: "www.linkedin.com/in/mundi-devon/",
+    image: "/images/agents/Devon-Mundi.jpeg",
     specialty: "Home Finance"
   },
   // {
