@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navLinks, WaIcon } from "@/lib/helper";
@@ -40,6 +40,39 @@ export default function Header() {
     return pathname.startsWith(href);
   };
 
+  // ─── Sliding nav underline ──────────────────────────────────
+  // One shared bar rather than a per-link underline, so moving between items
+  // animates its position instead of the marker disappearing and reappearing.
+  // It rests under the current page and returns there when the pointer leaves.
+  const linkRefs = useRef(new Map());
+  const [underline, setUnderline] = useState(null);
+
+  const activeHref = navLinks.find((link) => isActive(link.href))?.href;
+
+  // Inset matches the links' px-4, so the bar spans the label, not the padding.
+  const geometryOf = (el) => ({ left: el.offsetLeft + 16, width: el.offsetWidth - 32 });
+
+  const moveUnderlineTo = (el) => setUnderline({ ...geometryOf(el), visible: true });
+
+  const settleUnderline = useCallback(() => {
+    const activeEl = activeHref ? linkRefs.current.get(activeHref) : null;
+    // With no active link (privacy, terms, 404) park it on the first item and
+    // keep it hidden, so the first hover slides a short distance rather than
+    // sweeping in from the edge of the nav.
+    const target = activeEl ?? linkRefs.current.get(navLinks[0].href);
+    if (!target) return;
+    setUnderline({ ...geometryOf(target), visible: Boolean(activeEl) });
+  }, [activeHref]);
+
+  useEffect(() => {
+    settleUnderline();
+    window.addEventListener("resize", settleUnderline);
+    // Widths shift when the webfont swaps in, which would leave the bar
+    // measured against fallback metrics.
+    document.fonts?.ready.then(settleUnderline).catch(() => {});
+    return () => window.removeEventListener("resize", settleUnderline);
+  }, [settleUnderline]);
+
   return (
     <>
       <header
@@ -64,18 +97,39 @@ export default function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav
+            onMouseLeave={settleUnderline}
+            className="relative hidden lg:flex items-center gap-1"
+          >
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={isActive(link.href)
-                  ? "relative px-4 py-2 text-sm font-medium tracking-wide text-accent after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:rounded-full after:bg-accent"
-                  : "relative px-4 py-2 text-sm font-medium tracking-wide text-white/80 hover:text-white transition-colors duration-200"}
+                ref={(el) => {
+                  if (el) linkRefs.current.set(link.href, el);
+                  else linkRefs.current.delete(link.href);
+                }}
+                onMouseEnter={(e) => moveUnderlineTo(e.currentTarget)}
+                onFocus={(e) => moveUnderlineTo(e.currentTarget)}
+                className={`relative px-4 py-2 text-sm font-medium tracking-wide transition-colors duration-200
+                  ${isActive(link.href) ? "text-accent" : "text-white/80 hover:text-white"}`}
               >
                 {link.label}
               </Link>
             ))}
+
+            {underline && (
+              <span
+                aria-hidden="true"
+                className="absolute bottom-0 h-0.5 rounded-full bg-accent
+                  transition-[left,width,opacity] duration-300 ease-out motion-reduce:transition-none"
+                style={{
+                  left: underline.left,
+                  width: underline.width,
+                  opacity: underline.visible ? 1 : 0,
+                }}
+              />
+            )}
           </nav>
 
           {/* Desktop CTAs */}
