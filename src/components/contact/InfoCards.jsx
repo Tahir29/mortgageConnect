@@ -3,6 +3,7 @@
 import { useVisible } from "@/hooks/useVisible";
 import { contactInfo } from '@/lib/helper'
 import { ArrowRight, Clock } from "lucide-react";
+import { staggerDelay } from "@/lib/utils";
 
 export default function InfoCards() {
   const [ref, visible] = useVisible(0.1);
@@ -19,7 +20,7 @@ export default function InfoCards() {
                 href={item.href}
                 target={item.href.startsWith("http") ? "_blank" : undefined}
                 rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                style={{ transitionDelay: `${i * 80}ms` }}
+                style={{ transitionDelay: staggerDelay(i) }}
                 className={`group flex flex-col p-7 rounded-3xl border-2 border-gray-100
                   hover:border-accent/40 hover:shadow-[0_8px_40px_rgba(10,22,40,0.10)]
                   transition-all duration-300

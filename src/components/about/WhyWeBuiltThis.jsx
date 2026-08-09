@@ -21,7 +21,7 @@ export default function WhyWeBuiltThis() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
 
           {/* Left — Images collage */}
-          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-700" : "opacity-0 -translate-y-10 transition-all duration-700"}>
+          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-500" : "opacity-0 -translate-y-10 transition-all duration-500"}>
             <div className="grid grid-cols-2 gap-4">
               {collage.map((img) => (
                 <div key={img.src} className={`relative w-full aspect-square ${img.className}`}>
@@ -38,7 +38,7 @@ export default function WhyWeBuiltThis() {
           </div>
 
           {/* Right — Content */}
-          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-700 delay-150" : "opacity-0 translate-y-10 transition-all duration-700 delay-150"}>
+          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-500 delay-150" : "opacity-0 translate-y-10 transition-all duration-500 delay-150"}>
             <div className="gold-rule mb-5" />
             <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-4">The Problem We Solve</p>
             <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground leading-tight mb-6">

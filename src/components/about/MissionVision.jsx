@@ -9,7 +9,7 @@ export default function MissionVision() {
   return (
     <section ref={ref} className="section-padding bg-brand-cream">
       <div className="container-site">
-        <div className={visible ? "text-center mb-14 opacity-100 translate-y-0 transition-all duration-700" : "text-center mb-14 opacity-0 translate-y-8 transition-all duration-700"}>
+        <div className={visible ? "text-center mb-14 opacity-100 translate-y-0 transition-all duration-500" : "text-center mb-14 opacity-0 translate-y-8 transition-all duration-500"}>
           <div className="gold-rule mx-auto mb-4" />
           <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-3">What Drives Us</p>
           <h2 className="font-display text-3xl md:text-5xl font-semibold text-foreground">
@@ -21,7 +21,7 @@ export default function MissionVision() {
           {/* Mission */}
           <div
             style={{ transitionDelay: "0ms" }}
-            className={visible ? "group relative bg-foreground rounded-3xl p-10 overflow-hidden opacity-100 translate-y-0 transition-all duration-700" : "group relative bg-foreground rounded-3xl p-10 overflow-hidden opacity-0 translate-y-10 transition-all duration-700"}
+            className={visible ? "group relative bg-foreground rounded-3xl p-10 overflow-hidden opacity-100 translate-y-0 transition-all duration-500" : "group relative bg-foreground rounded-3xl p-10 overflow-hidden opacity-0 translate-y-10 transition-all duration-500"}
           >
             <div
               className="absolute -bottom-16 -right-16 w-56 h-56 rounded-full opacity-10 pointer-events-none"
@@ -41,7 +41,7 @@ export default function MissionVision() {
           {/* Vision */}
           <div
             style={{ transitionDelay: "120ms" }}
-            className={visible ? "group relative bg-white rounded-3xl p-10 border border-gray-100 shadow-[0_4px_24px_rgba(10,22,40,0.08)] overflow-hidden opacity-100 translate-y-0 transition-all duration-700" : "group relative bg-white rounded-3xl p-10 border border-gray-100 overflow-hidden opacity-0 translate-y-10 transition-all duration-700"}
+            className={visible ? "group relative bg-white rounded-3xl p-10 border border-gray-100 shadow-[0_4px_24px_rgba(10,22,40,0.08)] overflow-hidden opacity-100 translate-y-0 transition-all duration-500" : "group relative bg-white rounded-3xl p-10 border border-gray-100 overflow-hidden opacity-0 translate-y-10 transition-all duration-500"}
           >
             <div
               className="absolute -bottom-16 -right-16 w-56 h-56 rounded-full opacity-5 pointer-events-none"

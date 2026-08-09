@@ -44,7 +44,7 @@ export default function ContactForm() {
         <div className="grid lg:grid-cols-2 gap-10 items-start">
 
           {/* Left — Form */}
-          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-700" : "opacity-0 -translate-y-10 transition-all duration-700"}>
+          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-500" : "opacity-0 -translate-y-10 transition-all duration-500"}>
             <div className="gold-rule mb-5" />
             <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-4">Send a Message</p>
             <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-2">
@@ -181,7 +181,7 @@ export default function ContactForm() {
           </div>
 
           {/* Right — Map + quick info */}
-          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-700 delay-150" : "opacity-0 translate-y-10 transition-all duration-700 delay-150"}>
+          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-500 delay-150" : "opacity-0 translate-y-10 transition-all duration-500 delay-150"}>
 
             {/* Map */}
             <div className="rounded-3xl overflow-hidden shadow-[0_4px_24px_rgba(10,22,40,0.10)] border border-gray-100 mb-6">

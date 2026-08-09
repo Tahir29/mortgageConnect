@@ -1,30 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { agents } from "@/lib/helper"
 import AgentCard from "../common/AgentCard";
 import Link from "next/link";
+import { useVisible } from "@/hooks/useVisible";
 
 export default function FeaturedAgents() {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useVisible();
 
   return (
     <section ref={ref} className="section-padding bg-white">
       <div className="container-site">
         <div className={visible
-          ? "flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 opacity-100 translate-y-0 transition-all duration-700"
-          : "flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 opacity-0 translate-y-8 transition-all duration-700"}>
+          ? "flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 opacity-100 translate-y-0 transition-all duration-500"
+          : "flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 opacity-0 translate-y-8 transition-all duration-500"}>
           <div>
             <div className="gold-rule mb-4" />
             <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-3">Meet the Experts</p>

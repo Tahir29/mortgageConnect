@@ -30,8 +30,8 @@ export default function CompaniesGrid({ companies }) {
 
         {/* Header */}
         <div className={visible
-          ? "flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 opacity-100 translate-y-0 transition-all duration-700"
-          : "flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 opacity-0 translate-y-8 transition-all duration-700"}>
+          ? "flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 opacity-100 translate-y-0 transition-all duration-500"
+          : "flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 opacity-0 translate-y-8 transition-all duration-500"}>
           <div>
             <div className="gold-rule mb-4" />
             <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-3">Browse All</p>
@@ -76,7 +76,7 @@ export default function CompaniesGrid({ companies }) {
         </div>
 
         {/* Results count */}
-        <p className={`text-xs text-gray-400 mb-6 transition-all duration-700 ${visible ? "opacity-100" : "opacity-0"}`}>
+        <p className={`text-xs text-gray-400 mb-6 transition-all duration-500 ${visible ? "opacity-100" : "opacity-0"}`}>
           Showing{" "}
           <span className="font-semibold text-foreground">{filtered.length}</span>{" "}
           {filtered.length === 1 ? "company" : "companies"}

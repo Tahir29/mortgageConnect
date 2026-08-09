@@ -74,6 +74,20 @@
   img, video {
     @apply max-w-full block;
   }
+
+  /* Users who ask for reduced motion get the layout without the movement.
+     Transitions collapse to near-zero rather than being removed, so
+     JS-driven reveals still land on their final state instead of never
+     firing. `useVisible` also skips its observer entirely under this
+     setting, so nothing stays stuck at opacity-0. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 /* ─── Component Utilities ────────────────────────────────────── */

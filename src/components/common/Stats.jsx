@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect } from "react";
+import { useVisible } from "@/hooks/useVisible";
 
 const stats = [
   { value: 5, suffix: "+", label: "Verified Agents" },
@@ -39,17 +40,7 @@ function StatItem({ value, suffix, label, active }) {
 }
 
 export default function Stats() {
-  const [active, setActive] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setActive(true); },
-      { threshold: 0.4 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, active] = useVisible(0.4);
 
   return (
     <section ref={ref} className="bg-foreground relative overflow-hidden border-y border-white/10">

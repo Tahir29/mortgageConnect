@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { ShieldCheck, Zap, MapPin, BadgeDollarSign, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useVisible } from "@/hooks/useVisible";
+import { staggerDelay } from "@/lib/utils";
 
 const features = [
   { icon: ShieldCheck, title: "Verified Agents", description: "Every professional on our platform is screened, verified, and approved before listing. You deal with only trusted experts." },
@@ -18,17 +19,7 @@ const badges = [
 ];
 
 export default function WhyChooseUs() {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.15 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useVisible();
 
   return (
     <section ref={ref} className="section-padding bg-foreground overflow-hidden relative">
@@ -48,7 +39,7 @@ export default function WhyChooseUs() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
 
           {/* Left */}
-          <div className={visible ? "opacity-100 translate-x-0 transition-all duration-700" : "opacity-0 -translate-x-10 transition-all duration-700"}>
+          <div className={visible ? "opacity-100 translate-x-0 transition-all duration-500" : "opacity-0 -translate-x-10 transition-all duration-500"}>
             <div className="gold-rule mb-4" />
             <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-4">Why Mortgage Connect</p>
             <h2 className="font-display text-3xl md:text-5xl font-semibold text-white leading-tight">
@@ -82,7 +73,7 @@ export default function WhyChooseUs() {
               return (
                 <div
                   key={feature.title}
-                  style={{ transitionDelay: `${i * 100}ms` }}
+                  style={{ transitionDelay: staggerDelay(i) }}
                   className={visible
                     ? "group flex items-start gap-5 p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-accent/30 transition-all duration-300 opacity-100 translate-x-0"
                     : "group flex items-start gap-5 p-6 rounded-2xl border border-white/10 bg-white/5 transition-all duration-300 opacity-0 translate-x-10"}

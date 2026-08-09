@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { Search, LayoutList, MessageCircle, FileCheck } from "lucide-react";
+import { useVisible } from "@/hooks/useVisible";
+import { staggerDelay } from "@/lib/utils";
 
 const steps = [
   { icon: Search, title: "Search", description: "Filter agents by area, expertise, or language — find exactly who you need in seconds." },
@@ -11,24 +12,14 @@ const steps = [
 ];
 
 export default function HowItWorks() {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.2 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useVisible();
 
   return (
     <section ref={ref} className="section-padding bg-brand-cream">
       <div className="container-site">
 
         {/* Header */}
-        <div className={visible ? "text-center mb-16 opacity-100 translate-y-0 transition-all duration-700" : "text-center mb-16 opacity-0 translate-y-8 transition-all duration-700"}>
+        <div className={visible ? "text-center mb-16 opacity-100 translate-y-0 transition-all duration-500" : "text-center mb-16 opacity-0 translate-y-8 transition-all duration-500"}>
           <div className="gold-rule mx-auto mb-4" />
           <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-3">Simple Process</p>
           <h2 className="font-display text-3xl md:text-5xl font-semibold text-foreground">How It Works</h2>
@@ -47,10 +38,10 @@ export default function HowItWorks() {
             return (
               <div
                 key={step.title}
-                style={{ transitionDelay: `${i * 120}ms` }}
+                style={{ transitionDelay: staggerDelay(i) }}
                 className={visible
-                  ? "relative z-10 flex flex-col items-center text-center group opacity-100 translate-y-0 transition-all duration-700"
-                  : "relative z-10 flex flex-col items-center text-center group opacity-0 translate-y-10 transition-all duration-700"}
+                  ? "relative z-10 flex flex-col items-center text-center group opacity-100 translate-y-0 transition-all duration-500"
+                  : "relative z-10 flex flex-col items-center text-center group opacity-0 translate-y-10 transition-all duration-500"}
               >
                 <div className="relative mb-6">
                   <div className="w-24 h-24 rounded-full border-2 border-accent/20 group-hover:border-accent/60 transition-all duration-300 flex items-center justify-center bg-white shadow-[0_4px_24px_rgba(10,22,40,0.08)]">

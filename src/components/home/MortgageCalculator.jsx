@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { ArrowRight, Info } from "lucide-react";
 import Link from "next/link";
+import { useVisible } from "@/hooks/useVisible";
 
 const RESIDENCY_OPTIONS = [
   { value: "resident", label: "UAE Resident" },
@@ -79,8 +80,7 @@ function SliderRow({ label, min, max, value, onChange, step, displayValue, unit 
 }
 
 export default function MortgageCalculator() {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef(null);
+  const [ref, visible] = useVisible();
 
   const [purchasePrice, setPurchasePrice] = useState(1500000);
   const [residency, setResidency] = useState("resident");
@@ -107,21 +107,12 @@ export default function MortgageCalculator() {
   const totalPayment = monthlyPayment * numPayments;
   const totalInterest = totalPayment - loanAmount;
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section ref={ref} className="section-padding bg-brand-cream">
       <div className="container-site">
 
         {/* Header */}
-        <div className={visible ? "text-center mb-14 opacity-100 translate-y-0 transition-all duration-700" : "text-center mb-14 opacity-0 translate-y-8 transition-all duration-700"}>
+        <div className={visible ? "text-center mb-14 opacity-100 translate-y-0 transition-all duration-500" : "text-center mb-14 opacity-0 translate-y-8 transition-all duration-500"}>
           <div className="gold-rule mx-auto mb-4" />
           <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-3">Plan Ahead</p>
           <h2 className="font-display text-3xl md:text-5xl font-semibold text-foreground">
@@ -132,7 +123,7 @@ export default function MortgageCalculator() {
           </p>
         </div>
 
-        <div className={visible ? "grid lg:grid-cols-2 gap-8 items-start opacity-100 translate-y-0 transition-all duration-700 delay-100" : "grid lg:grid-cols-2 gap-8 items-start opacity-0 translate-y-8 transition-all duration-700 delay-100"}>
+        <div className={visible ? "grid lg:grid-cols-2 gap-8 items-start opacity-100 translate-y-0 transition-all duration-500 delay-100" : "grid lg:grid-cols-2 gap-8 items-start opacity-0 translate-y-8 transition-all duration-500 delay-100"}>
 
           {/* Left — Inputs */}
           <div className="bg-white rounded-3xl p-8 shadow-[0_4px_24px_rgba(10,22,40,0.08)] border border-gray-100 space-y-8">

@@ -2,6 +2,7 @@
 
 import { ShieldCheck, Zap, MapPin, BadgeDollarSign } from "lucide-react";
 import { useVisible } from "@/hooks/useVisible";
+import { staggerDelay } from "@/lib/utils";
 
 const values = [
   { icon: ShieldCheck, title: "Verified Agents", description: "Every professional is screened and approved before listing — you only deal with trusted, compliant brokers." },
@@ -17,7 +18,7 @@ export default function CoreValues() {
     <section ref={ref} className="section-padding bg-white">
       <div className="container-site">
 
-        <div className={visible ? "text-center mb-14 opacity-100 translate-y-0 transition-all duration-700" : "text-center mb-14 opacity-0 translate-y-8 transition-all duration-700"}>
+        <div className={visible ? "text-center mb-14 opacity-100 translate-y-0 transition-all duration-500" : "text-center mb-14 opacity-0 translate-y-8 transition-all duration-500"}>
           <div className="gold-rule mx-auto mb-4" />
           <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-3">What We Stand For</p>
           <h2 className="font-display text-3xl md:text-5xl font-semibold text-foreground">Our Core Values</h2>
@@ -32,7 +33,7 @@ export default function CoreValues() {
             return (
               <div
                 key={val.title}
-                style={{ transitionDelay: `${i * 100}ms` }}
+                style={{ transitionDelay: staggerDelay(i) }}
                 className={visible
                   ? "group flex flex-col p-8 rounded-3xl border-2 border-gray-100 hover:border-accent/40 hover:shadow-[0_8px_40px_rgba(10,22,40,0.10)] transition-all duration-300 opacity-100 translate-y-0"
                   : "group flex flex-col p-8 rounded-3xl border-2 border-gray-100 transition-all duration-300 opacity-0 translate-y-10"}
