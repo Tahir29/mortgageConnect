@@ -1,9 +1,11 @@
-import { agents } from "@/lib/helper";
+import { agents, getCompanyByName, COMPANY_FALLBACK } from "@/lib/helper";
 import { CompaniesHero, CompanyStats, CompaniesGrid, BankPartners } from "@/components/companies";
 import { CTABanner } from "@/components/common";
 import { baseUrl } from "@/lib/config";
 
 // ─── Build companies server-side ─────────────────────────────
+// Membership comes from how agents are tagged; branding is merged in from the
+// company profiles, falling back to defaults when a company has no profile.
 function buildCompanies(agents) {
   const map = {};
   agents.forEach((agent) => {
@@ -22,14 +24,20 @@ function buildCompanies(agents) {
     agent.languages.forEach((l) => map[agent.company].languages.add(l));
   });
 
-  return Object.values(map).map((c) => ({
-    ...c,
-    locations:   [...c.locations],
-    specialties: [...c.specialties],
-    languages:   [...c.languages],
-    agentCount:  c.agents.length,
-    topRating:   Math.max(...c.agents.map((a) => a.rating)),
-  }));
+  return Object.values(map).map((c) => {
+    const profile = getCompanyByName(c.name) ?? {};
+    return {
+      ...c,
+      locations:   [...c.locations],
+      specialties: [...c.specialties],
+      languages:   [...c.languages],
+      agentCount:  c.agents.length,
+      topRating:   Math.max(...c.agents.map((a) => a.rating)),
+      logo:        profile.logo      ?? COMPANY_FALLBACK.logo,
+      logoTheme:   profile.logoTheme ?? COMPANY_FALLBACK.logoTheme,
+      tagline:     profile.tagline   ?? COMPANY_FALLBACK.tagline,
+    };
+  });
 }
 
 

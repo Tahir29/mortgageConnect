@@ -69,7 +69,7 @@ const agentList = [
     id: 4,
     name: "M. Rumzee Mubarak",
     role: "Mortgage Consultant",
-    company: "Magnifient Future Investment",
+    company: "Magnificent Future Investments LLC",
     languages: ["English", "Hindi", "Urdu", "Tamil", "Sinhala"],
     location: "Sharjah",
     rating: 4.6,
@@ -236,6 +236,83 @@ export const agents = agentList.map((agent) => ({
 export function getAgentBySlug(slug) {
   return agents.find((agent) => agent.slug === slug);
 }
+
+/**
+ * Company profiles.
+ *
+ * Which companies appear on the site is driven entirely by `agentList` — a
+ * company shows up because agents are tagged to it. This list only *enriches*
+ * those companies with branding, so it is safe to edit freely:
+ *
+ *   • `name` must match `agent.company` exactly — that's the join key.
+ *   • Every other field is optional. Drop a logo, blank a tagline, or delete a
+ *     whole entry and the card falls back to initials and default copy rather
+ *     than breaking.
+ *   • A company listed here with no agents simply doesn't render.
+ *
+ * `logoTheme` is the background the logo needs, not a brand colour:
+ *   "light" → dark artwork on a white tile (most logos)
+ *   "dark"  → transparent/white artwork that would vanish on white
+ */
+const companyList = [
+  {
+    id: 1,
+    name: "Baytech Mortgage Broker",
+    logo: "/images/company/baytechlogo.jpeg",
+    logoTheme: "light",
+    tagline: "Mortgage Services Provider",
+  },
+  {
+    id: 2,
+    name: "Galaxy Prime Mortgage",
+    logo: "/images/company/gpb.jpg",
+    logoTheme: "light",
+    tagline: "Mortgage Services Provider",
+  },
+  {
+    id: 3,
+    name: "Magnificent Future Investments LLC",
+    logo: "/images/company/mfi.jpg",
+    logoTheme: "light",
+    tagline: "Leading Group of Companies in Dubai",
+  },
+  {
+    id: 4,
+    name: "New Best Credit",
+    logo: "/images/company/newCredit.png",
+    // Transparent PNG with white lettering — needs a dark tile to be visible.
+    logoTheme: "dark",
+    tagline: "Mortgage Services Provider",
+  },
+  {
+    id: 5,
+    name: "Prime Mortgages LLC",
+    logo: "/images/company/primeMortgage.jpeg",
+    logoTheme: "light",
+    tagline: "Mortgage Services Provider",
+  },
+  {
+    id: 6,
+    name: "Ultron Financials",
+    logo: "/images/company/ultronFinancials.jpeg",
+    logoTheme: "light",
+    tagline: "Mortgage Services Provider",
+  },
+];
+
+export const companies = companyList;
+
+/** Branding for a company name, or undefined if it has no profile yet. */
+export function getCompanyByName(name) {
+  return companies.find((company) => company.name === name);
+}
+
+/** Defaults applied when a company has no profile, so the UI never breaks. */
+export const COMPANY_FALLBACK = {
+  logo: "",
+  logoTheme: "light",
+  tagline: "Mortgage Services Provider",
+};
 
 export const WaIcon = () => (
   <svg className="w-4 h-4 text-whatsapp" fill="currentColor" viewBox="0 0 24 24">

@@ -5,8 +5,8 @@ import { formatPhone, toDialable } from "@/lib/utils";
 // Every value falls back to a literal, because NEXT_PUBLIC_* vars are inlined at
 // build time and `.env*` is gitignored — without defaults, a deploy that forgets
 // to set them renders links like `https://wa.me/undefined`.
-const PHONE = process.env.NEXT_PUBLIC_PHONE || "+971585318803";
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "971585318803";
+const PHONE = process.env.NEXT_PUBLIC_PHONE || "+971505649126";
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "971505649126";
 
 export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://mortgageconnect.ae",

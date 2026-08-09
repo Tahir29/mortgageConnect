@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Building2, Users, MapPin, Globe, MessageCircle } from "lucide-react";
@@ -13,6 +14,15 @@ export default function CompanyCard({ company, index, visible }) {
     .toUpperCase();
 
   const primaryAgent = company.agents[0];
+
+  // Fall back to initials if the company has no logo, or the file fails to load.
+  const [logoFailed, setLogoFailed] = useState(false);
+  const showLogo = Boolean(company.logo) && !logoFailed;
+  const tileBackground = !showLogo
+    ? "bg-accent"
+    : company.logoTheme === "dark"
+      ? "bg-foreground"
+      : "bg-white";
 
   return (
     <div
@@ -36,8 +46,23 @@ export default function CompanyCard({ company, index, visible }) {
         </div>
 
         <div className="absolute -bottom-8 left-6">
-          <div className="w-16 h-16 rounded-2xl border-4 border-white shadow-lg bg-accent flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-            <span className="text-foreground font-bold text-lg">{initials}</span>
+          <div
+            className={`w-32 h-20 rounded-2xl border-4 border-white shadow-lg overflow-hidden
+              flex items-center justify-center group-hover:scale-105 transition-transform duration-300
+              ${tileBackground}`}
+          >
+            {showLogo ? (
+              <Image
+                src={company.logo}
+                alt={`${company.name} logo`}
+                width={128}
+                height={80}
+                className="w-full h-full object-contain p-2"
+                onError={() => setLogoFailed(true)}
+              />
+            ) : (
+              <span className="text-foreground font-bold text-lg">{initials}</span>
+            )}
           </div>
         </div>
       </div>
@@ -48,7 +73,7 @@ export default function CompanyCard({ company, index, visible }) {
           {company.name}
         </h3>
         <p className="text-accent text-xs font-medium tracking-wide mb-5">
-          Mortgage Services Provider
+          {company.tagline}
         </p>
 
         <div className="space-y-2.5 mb-6">
