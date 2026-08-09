@@ -7,12 +7,17 @@ import { ArrowRight } from "lucide-react";
 import { bankLogos } from "@/lib/helper";
 import { useVisible } from "@/hooks/useVisible";
 
+/**
+ * Bank logos are horizontal wordmarks — all 40px tall, but from 1.7:1 to 8.8:1
+ * wide. `fill` + object-contain lets each one use the full width of its plate
+ * and stop at its native 40px height, so nothing is squashed or upscaled.
+ */
 function BankLogo({ name, src }) {
   const [failed, setFailed] = useState(false);
 
   if (failed) {
     return (
-      <span className="text-foreground font-bold text-xs text-center leading-tight">
+      <span className="text-gray-400 font-bold text-sm tracking-wide">
         {name.split(" ").map((w) => w[0]).join("").slice(0, 3)}
       </span>
     );
@@ -22,9 +27,9 @@ function BankLogo({ name, src }) {
     <Image
       src={src}
       alt={name}
-      width={40}
-      height={40}
-      className="w-10 h-10 object-contain"
+      fill
+      sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 200px"
+      className="object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
       onError={() => setFailed(true)}
     />
   );
@@ -50,22 +55,33 @@ export default function BankPartners() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+        {/* Flex rather than grid so a partial last row centres instead of
+            hanging off to the left — stays tidy for any number of banks. */}
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
           {bankLogos.map((bank, i) => (
+            // Outer element owns the staggered entrance so its transition-delay
+            // never leaks into the tile's hover response.
             <div
               key={bank.name}
               style={{ transitionDelay: `${i * 60}ms` }}
-              className={`group flex flex-col items-center gap-3 p-5 rounded-2xl border border-gray-100
-                hover:border-accent/40 hover:shadow-[0_4px_20px_rgba(10,22,40,0.08)]
-                bg-white transition-all duration-300
-                ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+              className={`basis-[calc(50%_-_0.375rem)] sm:basis-[calc(33.333%_-_0.667rem)] lg:basis-[calc(20%_-_0.8rem)]
+                transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
             >
-              <div className="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center overflow-hidden group-hover:bg-accent/5 transition-colors duration-300">
-                <BankLogo name={bank.name} src={bank.src} />
+              <div
+                className="group h-full flex flex-col items-center justify-center gap-4 px-4 py-6
+                  rounded-2xl border border-gray-100 bg-white
+                  hover:border-accent/40 hover:shadow-[0_8px_28px_rgba(10,22,40,0.10)] hover:-translate-y-0.5
+                  transition-all duration-300"
+              >
+                <div className="relative w-full h-10 flex items-center justify-center">
+                  <BankLogo name={bank.name} src={bank.src} />
+                </div>
+                {/* Fixed two-line box so names that wrap don't push their logo
+                    out of line with the rest of the row. */}
+                <span className="min-h-7 flex items-start justify-center text-gray-500 text-[11px] font-medium text-center leading-tight group-hover:text-foreground transition-colors duration-200">
+                  {bank.name}
+                </span>
               </div>
-              <span className="text-foreground text-[11px] font-semibold text-center leading-tight group-hover:text-accent transition-colors duration-200">
-                {bank.name}
-              </span>
             </div>
           ))}
         </div>
