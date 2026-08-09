@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "@/lib/gsap";
 
 const stats = [
   { value: 5, suffix: "+", label: "Verified Agents" },
@@ -9,50 +11,51 @@ const stats = [
   { value: 98,  suffix: "%", label: "Client Satisfaction" },
 ];
 
-function useCountUp(target, duration, active) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active) return;
-    let start = null;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const progress = Math.min((ts - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(eased * target));
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [target, duration, active]);
-  return count;
-}
-
-function StatItem({ value, suffix, label, active }) {
-  const count = useCountUp(value, 2000, active);
-  return (
-    <div className="flex flex-col items-center text-center px-4">
-      <span className="text-3xl md:text-4xl font-bold font-display text-accent">
-        {count}{suffix}
-      </span>
-      <span className="text-white/50 text-xs md:text-sm mt-1.5 tracking-wide">{label}</span>
-    </div>
-  );
-}
-
 export default function Stats() {
-  const [active, setActive] = useState(false);
-  const ref = useRef(null);
+  const root = useRef(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setActive(true); },
-      { threshold: 0.4 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      // Under reduced motion nothing runs, and the markup already carries the
+      // real figures — so the numbers are simply correct rather than stuck at 0.
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const counters = gsap.utils.toArray("[data-stat-value]", root.current);
+
+        counters.forEach((el, i) => {
+          const target = Number(el.dataset.statTarget);
+          const counter = { value: 0 };
+
+          gsap.to(counter, {
+            value: target,
+            // Was 2s, which had finished being interesting long before it
+            // finished counting.
+            duration: 1.1,
+            ease: "power2.out",
+            delay: i * 0.08,
+            onUpdate: () => {
+              el.textContent = String(Math.round(counter.value));
+            },
+            scrollTrigger: {
+              trigger: root.current,
+              start: "top 82%",
+              once: true,
+              // Reset to zero only as the band is reached, so a no-JS or
+              // pre-hydration render never shows a 0.
+              onEnter: () => {
+                el.textContent = "0";
+              },
+            },
+          });
+        });
+      });
+    },
+    { scope: root }
+  );
 
   return (
-    <section ref={ref} className="bg-foreground relative overflow-hidden border-y border-white/10">
+    <section ref={root} className="bg-foreground relative overflow-hidden border-y border-white/10">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-linear-to-br from-[#060e1f] via-foreground to-[#0d1e3a]" />
         <div className="absolute inset-0 bg-linear-to-t from-[#060e1f] via-transparent to-[#060e1f]/60" />
@@ -68,7 +71,15 @@ export default function Stats() {
       <div className="container-site py-14 z-10 relative">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 md:divide-x md:divide-white/10">
           {stats.map((stat) => (
-            <StatItem key={stat.label} {...stat} active={active} />
+            <div key={stat.label} className="flex flex-col items-center text-center px-4">
+              <span className="text-3xl md:text-4xl font-bold font-display text-accent tabular-nums">
+                {/* Rendered at its real value; GSAP zeroes it on enter and
+                    counts up, so crawlers and no-JS visitors see the figure. */}
+                <span data-stat-value data-stat-target={stat.value}>{stat.value}</span>
+                {stat.suffix}
+              </span>
+              <span className="text-white/50 text-xs md:text-sm mt-1.5 tracking-wide">{stat.label}</span>
+            </div>
           ))}
         </div>
       </div>

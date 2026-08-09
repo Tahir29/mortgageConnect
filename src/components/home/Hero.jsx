@@ -1,18 +1,71 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "@/lib/gsap";
 import { WaIcon } from "../../lib/helper";
 import { ArrowRight } from "lucide-react";
 import { site } from "@/lib/config";
 
 export default function Hero() {
+  const root = useRef(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const q = gsap.utils.selector(root);
+
+        // Entrance. Runs on load rather than on scroll — the hero is already
+        // in view, so there is nothing to trigger on.
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+        // The gold squiggle under "Trusted" draws itself once the headline has
+        // landed. Done with stroke-dashoffset so it needs no DrawSVG plugin.
+        const underline = q("[data-hero-underline]")[0];
+        if (underline) {
+          const length = underline.getTotalLength();
+          gsap.set(underline, { strokeDasharray: length, strokeDashoffset: length });
+        }
+
+        tl.from(q("[data-hero-badge]"), { autoAlpha: 0, y: 16, scale: 0.94, duration: 0.6 })
+          .from(q("[data-hero-title]"), { autoAlpha: 0, y: 34, duration: 0.9 }, "-=0.35");
+
+        if (underline) {
+          tl.to(underline, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, "-=0.25");
+        }
+
+        tl.from(q("[data-hero-sub]"), { autoAlpha: 0, y: 22, duration: 0.7 }, "-=0.5")
+          .from(q("[data-hero-cta] > *"), { autoAlpha: 0, y: 20, duration: 0.6, stagger: 0.12 }, "-=0.4")
+          .from(q("[data-hero-scroll]"), { autoAlpha: 0, duration: 0.6 }, "-=0.2");
+
+        // Background drifts slower than the content as the hero scrolls away,
+        // which is what reads as depth.
+        gsap.to(q("[data-hero-bg]"), {
+          yPercent: 18,
+          ease: "none",
+          scrollTrigger: {
+            trigger: root.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      });
+    },
+    { scope: root }
+  );
+
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden">
+    <section ref={root} className="relative min-h-screen flex flex-col overflow-hidden">
 
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-linear-to-br from-[#060e1f] via-foreground to-[#0d1e3a]" />
         <div
+          data-hero-bg
           className="absolute inset-0 opacity-20 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/images/hero-background.jpg')" }}
         />
@@ -35,18 +88,18 @@ export default function Hero() {
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center container-site pt-28 pb-20 md:pt-40 md:pb-28">
 
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-accent/30 bg-accent/10 animate-fade-in">
+        <div data-hero-badge className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-accent/30 bg-accent/10">
           <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
           <span className="text-accent text-xs font-medium tracking-widest uppercase">UAE&apos;s Premier Mortgage Platform</span>
         </div>
 
         {/* Headline */}
-        <h1 className="font-display text-center text-white font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] max-w-4xl animate-fade-in-up">
+        <h1 data-hero-title className="font-display text-center text-white font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] max-w-4xl">
           Find Your{" "}
           <span className="relative inline-block">
             <span className="text-accent">Trusted</span>
             <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 8" fill="none" preserveAspectRatio="none">
-              <path d="M0 6 Q50 1 100 5 Q150 9 200 4" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
+              <path data-hero-underline d="M0 6 Q50 1 100 5 Q150 9 200 4" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
             </svg>
           </span>{" "}
           <br className="hidden sm:block" />
@@ -54,12 +107,12 @@ export default function Hero() {
         </h1>
 
         {/* Subheadline */}
-        <p className="mt-6 text-center text-white/60 text-base md:text-lg max-w-2xl leading-relaxed animate-fade-in-up animation-delay-200">
+        <p data-hero-sub className="mt-6 text-center text-white/60 text-base md:text-lg max-w-2xl leading-relaxed">
           Discover top mortgage professionals across the UAE and connect instantly with experienced local agents — whether you&apos;re buying, refinancing, or exploring loan options.
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-10 animate-fade-in-up animation-delay-300">
+        <div data-hero-cta className="flex flex-wrap items-center justify-center gap-4 mt-10">
           <Link
             href="/our-agents"
             className="group flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-foreground font-semibold text-sm tracking-wide shadow-[0_4px_24px_rgba(201,168,76,0.4)] hover:bg-brand-gold-light hover:shadow-[0_4px_36px_rgba(201,168,76,0.6)] transition-all duration-300"
@@ -79,7 +132,7 @@ export default function Hero() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 md:flex flex-col items-center gap-2 opacity-40 animate-fade-in animation-delay-700 hidden">
+        <div data-hero-scroll className="absolute bottom-10 left-1/2 -translate-x-1/2 md:flex flex-col items-center gap-2 opacity-40 hidden">
           <span className="text-white text-[10px] tracking-widest uppercase">Scroll</span>
           <div className="w-0.5 h-12 bg-white/20 rounded-full overflow-hidden relative">
             <div className="absolute top-0 left-0 w-full h-1/2 bg-linear-to-b from-white to-transparent rounded-full animate-scroll-down" />
