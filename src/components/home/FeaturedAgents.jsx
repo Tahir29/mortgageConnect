@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { ArrowRight } from "lucide-react";
 import { agents } from "@/lib/helper";
 import AgentCard from "../common/AgentCard";
@@ -70,8 +70,6 @@ export default function FeaturedAgents() {
           }
 
           if (isMobile) {
-            // No pinning on a phone. Cards stack vertically and each lifts in
-            // as it arrives.
             gsap.from(header, {
               autoAlpha: 0,
               y: 30,
@@ -80,18 +78,50 @@ export default function FeaturedAgents() {
               scrollTrigger: { trigger: root.current, start: "top 80%" },
             });
 
-            ScrollTrigger.batch(cards, {
-              start: "top 88%",
-              once: true,
-              onEnter: (batch) =>
-                gsap.from(batch, {
-                  autoAlpha: 0,
-                  y: 48,
-                  duration: 0.6,
-                  ease: "power2.out",
-                  stagger: 0.12,
-                }),
+            // Card pile: the section pins and each card slides up over the one
+            // before it, releasing once the last has landed.
+            //
+            // Cards are lifted out of flow so they occupy the same space. The
+            // container then has no height of its own, so it's set from the
+            // tallest card — measured, because card height varies with content
+            // (not every agent has a business-volume line).
+            gsap.set(track, { position: "relative" });
+            gsap.set(cards, { position: "absolute", top: 0, left: 0, width: "100%" });
+            cards.forEach((card, i) => gsap.set(card, { zIndex: i }));
+
+            const tallest = () => Math.max(...cards.map((c) => c.offsetHeight));
+            gsap.set(track, { height: tallest() });
+
+            const tl = gsap.timeline({
+              scrollTrigger: {
+                trigger: root.current,
+                start: "top top+=72",
+                // One screenful of travel per card, plus a beat at the end so
+                // the final card settles before the pin releases.
+                end: () => "+=" + ((cards.length - 1) * 220 + 320),
+                pin: true,
+                scrub: 1,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+                onRefresh: () => gsap.set(track, { height: tallest() }),
+              },
             });
+
+            cards.forEach((card, i) => {
+              if (i === 0) return; // the first card is already in place
+              tl.fromTo(
+                card,
+                { yPercent: 105 },
+                { yPercent: 0, duration: 1, ease: "none" },
+                i - 1
+              ).to(
+                cards[i - 1],
+                { scale: 0.94, autoAlpha: 0.55, duration: 1, ease: "none" },
+                i - 1
+              );
+            });
+
+            tl.to({}, { duration: 0.5 }); // trailing hold
           }
         }
       );
