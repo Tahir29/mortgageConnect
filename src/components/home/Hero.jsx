@@ -20,26 +20,42 @@ export default function Hero() {
 
         // Entrance. Runs on load rather than on scroll — the hero is already
         // in view, so there is nothing to trigger on.
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-        // The gold squiggle under "Trusted" draws itself once the headline has
-        // landed. Done with stroke-dashoffset so it needs no DrawSVG plugin.
+        const badge = q("[data-hero-badge]");
+        const title = q("[data-hero-title]");
+        const sub = q("[data-hero-sub]");
+        const buttons = q("[data-hero-cta] > *");
+        const scrollCue = q("[data-hero-scroll]");
         const underline = q("[data-hero-underline]")[0];
+
+        // Deliberately `set` + `to` with explicit end values rather than
+        // `from`. A `from` tween captures the element's current value as its
+        // destination, and `ScrollTrigger.refresh()` — fired by the Lenis
+        // bridge just after this runs — can invalidate it while it is still
+        // sitting at its start state. It then re-records that hidden state as
+        // the destination and the element animates from invisible to
+        // invisible, which is exactly how the hero buttons disappeared.
+        gsap.set([...badge, ...title, ...sub, ...buttons], { autoAlpha: 0, y: 20 });
+        gsap.set(badge, { scale: 0.94 });
+        gsap.set(scrollCue, { autoAlpha: 0 });
+
         if (underline) {
           const length = underline.getTotalLength();
           gsap.set(underline, { strokeDasharray: length, strokeDashoffset: length });
         }
 
-        tl.from(q("[data-hero-badge]"), { autoAlpha: 0, y: 16, scale: 0.94, duration: 0.6 })
-          .from(q("[data-hero-title]"), { autoAlpha: 0, y: 34, duration: 0.9 }, "-=0.35");
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+        tl.to(badge, { autoAlpha: 1, y: 0, scale: 1, duration: 0.6 })
+          .to(title, { autoAlpha: 1, y: 0, duration: 0.9 }, "-=0.35");
 
         if (underline) {
           tl.to(underline, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, "-=0.25");
         }
 
-        tl.from(q("[data-hero-sub]"), { autoAlpha: 0, y: 22, duration: 0.7 }, "-=0.5")
-          .from(q("[data-hero-cta] > *"), { autoAlpha: 0, y: 20, duration: 0.6, stagger: 0.12 }, "-=0.4")
-          .from(q("[data-hero-scroll]"), { autoAlpha: 0, duration: 0.6 }, "-=0.2");
+        tl.to(sub, { autoAlpha: 1, y: 0, duration: 0.7 }, "-=0.5")
+          .to(buttons, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.12 }, "-=0.4")
+          // 0.4 matches the resting opacity its class already sets.
+          .to(scrollCue, { autoAlpha: 0.4, duration: 0.6 }, "-=0.2");
 
         // Background drifts slower than the content as the hero scrolls away,
         // which is what reads as depth.
