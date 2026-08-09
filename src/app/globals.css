@@ -53,7 +53,9 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* No `scroll-behavior: smooth` — Lenis drives scrolling now, and the two
+       fight each other (native smooth scroll overrides Lenis' interpolation
+       on anchor jumps and programmatic scrolls). */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

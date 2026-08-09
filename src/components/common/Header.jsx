@@ -3,12 +3,14 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLenis } from "lenis/react";
 import { navLinks, WaIcon } from "@/lib/helper";
 import { Menu, X } from "lucide-react";
 import { site } from "@/lib/config";
 
 export default function Header() {
   const pathname = usePathname();
+  const lenis = useLenis();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -22,8 +24,12 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    // Lenis ignores `overflow: hidden`, so pause it while the drawer is open
+    // or the page scrolls underneath.
+    if (isMenuOpen) lenis?.stop();
+    else lenis?.start();
     return () => { document.body.style.overflow = ""; };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, lenis]);
 
   // Close the drawer on navigation (incl. browser back/forward, which the
   // per-link onClick handlers don't cover) by adjusting state during render.

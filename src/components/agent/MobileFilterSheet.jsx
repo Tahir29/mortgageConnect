@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLenis } from "lenis/react";
 import { SlidersHorizontal, X, Search, Check } from "lucide-react";
 import {
   EMPTY_FILTERS,
@@ -20,6 +21,7 @@ import {
  * underneath while the user is still choosing.
  */
 export default function MobileFilterSheet({ filters, onApply }) {
+  const lenis = useLenis();
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState(filters);
   const [activeGroup, setActiveGroup] = useState(FILTER_GROUPS[0].key);
@@ -43,6 +45,10 @@ export default function MobileFilterSheet({ filters, onApply }) {
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    // `overflow: hidden` alone doesn't stop Lenis — it keeps driving scroll
+    // position from wheel/touch events, so the page would still move behind
+    // the sheet. Lenis has to be paused explicitly.
+    lenis?.stop();
 
     const onKeyDown = (e) => {
       if (e.key === "Escape") setOpen(false);
@@ -51,9 +57,10 @@ export default function MobileFilterSheet({ filters, onApply }) {
 
     return () => {
       document.body.style.overflow = previous;
+      lenis?.start();
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, [open, lenis]);
 
   const setDraftValue = (key, value) => setDraft((d) => ({ ...d, [key]: value }));
 

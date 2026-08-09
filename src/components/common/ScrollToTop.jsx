@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLenis } from "lenis/react";
 import { ArrowUp } from "lucide-react"; // Custom icon library or use an SVG
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const lenis = useLenis();
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -34,10 +36,10 @@ export default function ScrollToTop() {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    // Hand the scroll to Lenis so it eases with the same feel as the rest of
+    // the page; native smooth scrolling would jump past Lenis' interpolation.
+    if (lenis) lenis.scrollTo(0);
+    else window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (

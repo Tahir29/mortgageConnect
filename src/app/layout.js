@@ -1,7 +1,7 @@
 import {Inter, Playfair_Display} from "next/font/google";
 import { Footer, Header } from "@/components/common/";
 import { ScrollToTop } from "@/components/common/";
-import { JsonLd } from "@/components/common/";
+import { JsonLd, SmoothScroll } from "@/components/common/";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import "./globals.css";
 
@@ -98,12 +98,14 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <JsonLd data={organizationSchema()} />
         <JsonLd data={websiteSchema()} />
-        <Header />
-        <main className="flex-1">
-          {children}
-          <ScrollToTop />
-        </main>
-        <Footer />
+        <SmoothScroll>
+          <Header />
+          <main className="flex-1">
+            {children}
+            <ScrollToTop />
+          </main>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );
