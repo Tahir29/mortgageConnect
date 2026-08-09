@@ -1,26 +1,58 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { ReactLenis } from "lenis/react";
+import { useEffect } from "react";
+import { ReactLenis, useLenis } from "lenis/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 /**
- * Site-wide smooth scrolling, and the bridge between Lenis and ScrollTrigger.
+ * Keeps ScrollTrigger in step with Lenis.
+ *
+ * Rendered *inside* ReactLenis so it can read the instance through
+ * `useLenis()`. That matters: ReactLenis constructs Lenis in an effect and
+ * holds it in state, so a ref read from the parent is still undefined on the
+ * first commit. Reading it from context instead means this wires up as soon as
+ * the instance exists, and re-wires if it is ever recreated.
+ *
+ * ScrollTrigger updates on Lenis' scroll event rather than the browser's,
+ * because Lenis moves the page on its own schedule — left on native events,
+ * ScrollTrigger reads stale positions and pinned sections drift.
+ */
+function LenisScrollTriggerBridge() {
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (!lenis) return;
+
+    const update = () => ScrollTrigger.update();
+    lenis.on("scroll", update);
+
+    // Stop GSAP skipping time after a slow frame, which would let the two
+    // drift apart mid-scroll.
+    gsap.ticker.lagSmoothing(0);
+
+    // Trigger positions are first measured before webfonts and images settle.
+    ScrollTrigger.refresh();
+
+    return () => {
+      lenis.off("scroll", update);
+      gsap.ticker.lagSmoothing(500, 33); // GSAP's default
+    };
+  }, [lenis]);
+
+  return null;
+}
+
+/**
+ * Site-wide smooth scrolling.
  *
  * Mounted once in the root layout so every page inherits it, and so other
  * components can reach the instance with `useLenis()`.
  *
- * The two libraries have to share a clock. Left alone, Lenis runs its own rAF
- * loop and ScrollTrigger runs off native scroll events; because Lenis moves the
- * page on its own schedule, ScrollTrigger reads stale positions and pinned
- * sections visibly jitter. So:
- *
- *   - `autoRaf: false` stops Lenis driving itself,
- *   - GSAP's ticker drives `lenis.raf` instead, so both advance on one frame,
- *   - `ScrollTrigger.update` runs on Lenis' scroll event rather than the
- *     browser's, so triggers evaluate against the interpolated position,
- *   - `lagSmoothing(0)` stops GSAP skipping time after a slow frame, which
- *     would otherwise desync the two.
+ * Lenis drives its own rAF loop (`autoRaf` left on). Handing that job to
+ * GSAP's ticker is the tighter integration, but it makes scrolling itself
+ * depend on the bridge being wired — and when that failed, the page could not
+ * be scrolled by wheel at all. Self-driving means scrolling always works even
+ * if the GSAP side never initialises.
  *
  * Notes on the options:
  *  - `lerp` controls how closely the viewport follows the wheel. Lower is
@@ -31,40 +63,13 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
  *    mobile filter sheet.
  */
 export default function SmoothScroll({ children }) {
-  const lenisRef = useRef(null);
-
-  useEffect(() => {
-    const lenis = lenisRef.current?.lenis;
-    if (!lenis) return;
-
-    const onScroll = () => ScrollTrigger.update();
-    lenis.on("scroll", onScroll);
-
-    const drive = (time) => lenis.raf(time * 1000); // GSAP ticker is in seconds
-    gsap.ticker.add(drive);
-    gsap.ticker.lagSmoothing(0);
-
-    // Positions are measured before webfonts and images settle, which would
-    // otherwise leave every trigger a few pixels off.
-    ScrollTrigger.refresh();
-
-    return () => {
-      lenis.off("scroll", onScroll);
-      gsap.ticker.remove(drive);
-      gsap.ticker.lagSmoothing(500, 33); // restore GSAP's default
-    };
-  }, []);
-
   return (
     <ReactLenis
       root
-      ref={lenisRef}
       options={{
         lerp: 0.12,
         wheelMultiplier: 1,
         smoothWheel: true,
-        // Driven by GSAP's ticker instead — see above.
-        autoRaf: false,
         // Native scrolling on touch — see note above.
         syncTouch: false,
         touchMultiplier: 1.5,
@@ -77,6 +82,7 @@ export default function SmoothScroll({ children }) {
         anchors: true,
       }}
     >
+      <LenisScrollTriggerBridge />
       {children}
     </ReactLenis>
   );
