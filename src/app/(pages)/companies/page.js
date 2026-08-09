@@ -1,6 +1,7 @@
 import { agents } from "@/lib/helper";
 import { CompaniesHero, CompanyStats, CompaniesGrid, BankPartners } from "@/components/companies";
 import { CTABanner } from "@/components/common";
+import { baseUrl } from "@/lib/config";
 
 // ─── Build companies server-side ─────────────────────────────
 function buildCompanies(agents) {
@@ -31,7 +32,6 @@ function buildCompanies(agents) {
   }));
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mortgageconnect.ae";
 
 export const metadata = {
   title: "Companies | Verified Mortgage Companies in UAE",
@@ -59,7 +59,7 @@ export const metadata = {
     siteName: "Mortgage Connect",
     images: [
       {
-        url: `${baseUrl}/og-companies.jpg`,
+        url: `${baseUrl}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Mortgage Companies in UAE",
@@ -71,7 +71,7 @@ export const metadata = {
     title: "Verified Mortgage Companies in UAE | Mortgage Connect",
     description:
       "Browse registered and verified mortgage firms across the UAE — each staffed with vetted professionals.",
-    images: [`${baseUrl}/og-companies.jpg`],
+    images: [`${baseUrl}/og-image.jpg`],
   },
   robots: {
     index: true,
@@ -90,12 +90,12 @@ export default function Companies() {
   const companies = buildCompanies(agents);
 
   return (
-    <main>
+    <>
       <CompaniesHero total={companies.length} />
       <CompanyStats companies={companies} />
       <CompaniesGrid companies={companies} />
       <BankPartners />
       <CTABanner />
-    </main>
+    </>
   );
 }

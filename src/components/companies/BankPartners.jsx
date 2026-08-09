@@ -1,9 +1,34 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { bankLogos } from "@/lib/helper";
 import { useVisible } from "@/hooks/useVisible";
+
+function BankLogo({ name, src }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <span className="text-foreground font-bold text-xs text-center leading-tight">
+        {name.split(" ").map((w) => w[0]).join("").slice(0, 3)}
+      </span>
+    );
+  }
+
+  return (
+    <Image
+      src={src}
+      alt={name}
+      width={40}
+      height={40}
+      className="w-10 h-10 object-contain"
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 export default function BankPartners() {
   const [ref, visible] = useVisible(0.1);
@@ -36,20 +61,7 @@ export default function BankPartners() {
                 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
             >
               <div className="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center overflow-hidden group-hover:bg-accent/5 transition-colors duration-300">
-                <img
-                  src={bank.src}
-                  alt={bank.name}
-                  className="w-10 h-10 object-contain"
-                  onError={(e) => {
-                    e.target.style.display = "none";
-                    e.target.nextSibling.style.display = "flex";
-                  }}
-                />
-                <div className="hidden w-10 h-10 items-center justify-center">
-                  <span className="text-foreground font-bold text-xs text-center leading-tight">
-                    {bank.name.split(" ").map((w) => w[0]).join("").slice(0, 3)}
-                  </span>
-                </div>
+                <BankLogo name={bank.name} src={bank.src} />
               </div>
               <span className="text-foreground text-[11px] font-semibold text-center leading-tight group-hover:text-accent transition-colors duration-200">
                 {bank.name}

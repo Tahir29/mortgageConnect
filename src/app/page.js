@@ -1,7 +1,7 @@
 import { Hero, HowItWorks, FeaturedAgents, WhyChooseUs, BankMarquee, MortgageCalculator } from '@/components/home' 
 import { Stats, CTABanner } from "@/components/common";
+import { baseUrl } from "@/lib/config";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mortgageconnect.ae";
 
 export const metadata = {
   title: "Mortgage Connect UAE | Find Trusted Mortgage Agents in UAE",

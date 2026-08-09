@@ -1,7 +1,7 @@
 import { AboutHero, MDSection, MissionVision, CoreValues, WhyWeBuiltThis } from "@/components/about";
 import { Stats, CTABanner } from "@/components/common";
+import { baseUrl } from "@/lib/config";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mortgageconnect.ae";
 
 export const metadata = {
   title: "About Us | Our Story & Mission",
@@ -27,7 +27,7 @@ export const metadata = {
     siteName: "Mortgage Connect",
     images: [
       {
-        url: `${baseUrl}/og-about.jpg`,
+        url: `${baseUrl}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "About Mortgage Connect UAE",
@@ -39,7 +39,7 @@ export const metadata = {
     title: "About Mortgage Connect UAE | Our Story & Mission",
     description:
       "The first structured mortgage broker marketplace in the UAE — built for transparency, trust, and zero fees.",
-    images: [`${baseUrl}/og-about.jpg`],
+    images: [`${baseUrl}/og-image.jpg`],
   },
   robots: {
     index: true,

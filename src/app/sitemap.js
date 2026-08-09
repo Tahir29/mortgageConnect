@@ -1,6 +1,7 @@
-export default function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mortgageconnect.ae";
+import { baseUrl } from "@/lib/config";
+import { agents } from "@/lib/helper";
 
+export default function sitemap() {
   const routes = [
     {
       url: `${baseUrl}/`,
@@ -32,19 +33,26 @@ export default function sitemap() {
       changeFrequency: "yearly",
       priority: 0.6,
     },
-    { 
-      url: `${baseUrl}/privacy-policy`, 
-      lastModified: new Date(), 
-      changeFrequency: "yearly", 
-      priority: 0.3 
+    {
+      url: `${baseUrl}/privacy-policy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3
     },
-    { 
-      url: `${baseUrl}/terms-of-use`, 
-      lastModified: new Date(), 
-      changeFrequency: "yearly", 
-      priority: 0.3 
+    {
+      url: `${baseUrl}/terms-of-use`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3
     },
   ];
 
-  return routes;
+  const agentRoutes = agents.map((agent) => ({
+    url: `${baseUrl}${agent.href}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  return [...routes, ...agentRoutes];
 }

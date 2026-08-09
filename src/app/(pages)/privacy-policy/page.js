@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { baseUrl } from "@/lib/config";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mortgageconnect.ae";
 
 export const metadata = {
   title: "Privacy Policy | Mortgage Connect UAE",
@@ -114,7 +114,7 @@ export default function PrivacyPolicyPage() {
       <section className="container-site py-16 max-w-3xl">
         <p className="text-gray-600 text-base leading-relaxed mb-10">
           Mortgage Connect UAE (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website at{" "}
-          <a href="/" className="text-accent hover:underline">mortgageconnect.ae</a>.
+          <Link href="/" className="text-accent hover:underline">mortgageconnect.ae</Link>.
           Please read this policy carefully. If you disagree with its terms, please discontinue use of our platform.
         </p>
 

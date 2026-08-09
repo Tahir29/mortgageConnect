@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { navLinks, WaIcon, socialLinks } from "@/lib/helper";
+import { site } from "@/lib/config";
 import { MapPin, Phone, Mail, ArrowRight } from "lucide-react";
 
 const emirates = ["Dubai","Abu Dhabi","Sharjah","Ajman","Ras Al Khaimah","Fujairah"];
@@ -33,7 +34,7 @@ export default function Footer() {
 
             {/* WhatsApp */}
             <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}
+              href={site.whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-whatsapp/30 text-whatsapp text-xs font-medium hover:bg-whatsapp/10 transition-colors duration-200 mb-5"
@@ -80,26 +81,26 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href={`tel:${process.env.NEXT_PUBLIC_PHONE}`}
+                  href={site.phoneHref}
                   className="flex items-start gap-3 text-white/40 text-sm hover:text-white transition-colors duration-200"
                 >
                   <Phone size={14} className="mt-0.5 shrink-0 text-accent" />
-                  {process.env.NEXT_PUBLIC_PHONE}
+                  {site.phoneDisplay}
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${process.env.NEXT_PUBLIC_EMAIL}`}
+                  href={`mailto:${site.email}`}
                   className="flex items-start gap-3 text-white/40 text-sm hover:text-white transition-colors duration-200"
                 >
                   <Mail size={14} className="mt-0.5 shrink-0 text-accent" />
-                  {process.env.NEXT_PUBLIC_EMAIL}
+                  {site.email}
                 </a>
               </li>
               <li>
                 <div className="flex items-start gap-3 text-white/40 text-sm">
                   <MapPin size={14} className="mt-0.5 shrink-0 text-accent" />
-                  <span>{process.env.NEXT_PUBLIC_ADDRESS}</span>
+                  <span>{site.address}</span>
                 </div>
               </li>
             </ul>

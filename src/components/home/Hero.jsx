@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { WaIcon } from "../../lib/helper";
 import { ArrowRight } from "lucide-react";
+import { site } from "@/lib/config";
 
 export default function Hero() {
   return (
@@ -36,7 +37,7 @@ export default function Hero() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-accent/30 bg-accent/10 animate-fade-in">
           <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-          <span className="text-accent text-xs font-medium tracking-widest uppercase">UAE's Premier Mortgage Platform</span>
+          <span className="text-accent text-xs font-medium tracking-widest uppercase">UAE&apos;s Premier Mortgage Platform</span>
         </div>
 
         {/* Headline */}
@@ -54,7 +55,7 @@ export default function Hero() {
 
         {/* Subheadline */}
         <p className="mt-6 text-center text-white/60 text-base md:text-lg max-w-2xl leading-relaxed animate-fade-in-up animation-delay-200">
-          Discover top mortgage professionals across the UAE and connect instantly with experienced local agents — whether you're buying, refinancing, or exploring loan options.
+          Discover top mortgage professionals across the UAE and connect instantly with experienced local agents — whether you&apos;re buying, refinancing, or exploring loan options.
         </p>
 
         {/* CTA Buttons */}
@@ -67,7 +68,7 @@ export default function Hero() {
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
           </Link>
           <a
-            href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}
+            href={site.whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-8 py-4 rounded-full border border-white/25 text-white text-sm font-medium hover:border-white/50 hover:bg-white/5 transition-all duration-300"

@@ -1,5 +1,8 @@
-import { Star, Phone, MessageCircle, Mail, Globe, TrendingUp } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { Star, Phone, MessageCircle, Mail, Globe, TrendingUp, ArrowRight } from "lucide-react";
 import { LinkedInIcon } from "@/lib/helper"
+import { toDialable } from "@/lib/utils"
 
 function Stars({ rating }) {
   return (
@@ -32,7 +35,6 @@ export default function AgentCard({ agent, index, visible }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${agent.name} on LinkedIn`}
-            onClick={(e) => e.stopPropagation()}
             className="absolute top-4 right-4 w-7 h-7 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/60 hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white transition-all duration-200"
           >
             <LinkedInIcon />
@@ -44,7 +46,13 @@ export default function AgentCard({ agent, index, visible }) {
         </span>
         <div className="absolute -bottom-10 left-6">
           {agent.image ? (
-            <img src={agent.image} alt={agent.name} className="w-20 h-20 rounded-2xl object-cover object-top border-4 border-white shadow-lg group-hover:scale-105 transition-transform duration-300" />
+            <Image
+              src={agent.image}
+              alt={agent.name}
+              width={80}
+              height={80}
+              className="w-20 h-20 rounded-2xl object-cover object-top border-4 border-white shadow-lg group-hover:scale-105 transition-transform duration-300"
+            />
           ) : (
             <div className="w-20 h-20 rounded-2xl border-4 border-white shadow-lg bg-accent flex items-center justify-center">
               <span className="text-foreground text-xl font-bold">{initials}</span>
@@ -55,7 +63,11 @@ export default function AgentCard({ agent, index, visible }) {
 
       {/* Card body */}
       <div className="pt-14 px-6 pb-6">
-        <h3 className="font-display text-lg font-semibold text-foreground leading-tight">{agent.name}</h3>
+        <h3 className="font-display text-lg font-semibold text-foreground leading-tight">
+          <Link href={agent.href} className="hover:text-accent transition-colors duration-200">
+            {agent.name}
+          </Link>
+        </h3>
         <p className="text-accent text-xs font-medium tracking-wide mt-1 mb-4">{agent.role}</p>
         <div className="items-center gap-2 mb-4 hidden">
           <Stars rating={agent.rating} />
@@ -83,8 +95,15 @@ export default function AgentCard({ agent, index, visible }) {
             )}
           </div>
         </div>
+        <Link
+          href={agent.href}
+          className="group/profile inline-flex items-center gap-1.5 text-accent text-xs font-semibold mb-5 hover:underline"
+        >
+          View full profile
+          <ArrowRight size={12} className="group-hover/profile:translate-x-1 transition-transform duration-200" />
+        </Link>
         <div className="h-px bg-gray-100 mb-5" />
-        <div className="flex gap-0.5 md:gap-2">          
+        <div className="flex gap-0.5 md:gap-2">
           <a
             href={`mailto:${agent.email}`}
             className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-foreground/5 border border-foreground/15 text-foreground text-xs font-semibold hover:bg-foreground hover:text-white hover:border-foreground transition-all duration-200"
@@ -102,7 +121,7 @@ export default function AgentCard({ agent, index, visible }) {
             WhatsApp
           </a>
           <a
-            href={`tel:${agent.phone}`}
+            href={`tel:${toDialable(agent.phone)}`}
             className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-foreground/5 border border-foreground/15 text-foreground text-xs font-semibold hover:bg-foreground hover:text-white hover:border-foreground transition-all duration-200"
           >
             <Phone size={13} />

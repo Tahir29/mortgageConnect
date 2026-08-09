@@ -1,4 +1,6 @@
 import { Mail, MapPin, Phone, MessageCircle } from "lucide-react";
+import { site } from "@/lib/config";
+import { slugify } from "@/lib/utils";
 
 export const navLinks = [
   { label: "Home", href: "/" },
@@ -8,8 +10,9 @@ export const navLinks = [
   { label: "Contact Us", href: "/contact-us" },
 ]
 
-export const agents = [
+const agentList = [
   {
+    id: 1,
     name: "Ehsan Jamshidzadeh",
     role: "Mortgage Consultant",
     company: "Baytech Mortgage Broker",
@@ -27,6 +30,7 @@ export const agents = [
     specialty: "Refinancing"
   },
   {
+    id: 2,
     name: "Zoheb Siddiqui",
     role: "Mortgage Consultant",
     company: "Baytech Mortgage Broker",
@@ -44,6 +48,7 @@ export const agents = [
     specialty: "Refinancing"
   },  
   {
+    id: 3,
     name: "Ragab Mohamed",
     role: "Mortgage Consultant",
     company: "Baytech Mortgage Broker",
@@ -61,6 +66,7 @@ export const agents = [
     specialty: "Home Finance"
   },
   {
+    id: 4,
     name: "M. Rumzee Mubarak",
     role: "Mortgage Consultant",
     company: "Magnifient Future Investment",
@@ -78,6 +84,7 @@ export const agents = [
     specialty: "Commercial"
   },
   {
+    id: 5,
     name: "Soha Butt",
     role: "Mortgage Consultant",
     company: "Galaxy Prime Mortgage",
@@ -90,11 +97,12 @@ export const agents = [
     phone: "+971 50 526 1511",
     whatsapp: "971505261511",
     email: "sooha.rauf@gpmb.ae",
-    linkedin: " https://www.linkedin.com/in/soha-butt-456102152/",
+    linkedin: "https://www.linkedin.com/in/soha-butt-456102152/",
     image: "/images/agents/Soha-Butt.jpg",
     specialty: "Home Finance"
   },
   {
+    id: 6,
     name: "Mustafa Shanan",
     role: "Mortgage Consultant",
     company: "New Best Credit",
@@ -112,10 +120,11 @@ export const agents = [
     specialty: "Islamic Finance"
   },
   {
+    id: 7,
     name: "Kiran Vinodan",
     role: "Mortgage Consultant",
     company: "Baytech Mortgage Broker",
-    languages: ["English", "Malyalam", "Hindi", "Tamil"],
+    languages: ["English", "Malayalam", "Hindi", "Tamil"],
     location: "Dubai",
     rating: 4.8,
     reviews: 22,
@@ -129,6 +138,7 @@ export const agents = [
     specialty: "Home Finance"
   },
   {
+    id: 8,
     name: "Raghuveer Singh",
     role: "Mortgage Consultant",
     company: "Ultron Financials",
@@ -146,6 +156,7 @@ export const agents = [
     specialty: "Home Finance"
   },
   {
+    id: 9,
     name: "Kapil Pandey",
     role: "Mortgage Consultant",
     company: "Ultron Financials",
@@ -163,6 +174,7 @@ export const agents = [
     specialty: "Home Finance"
   },
   {
+    id: 10,
     name: "Manoj Kuchan",
     role: "Mortgage Consultant",
     company: "Ultron Financials",
@@ -180,6 +192,7 @@ export const agents = [
     specialty: "Home Finance"
   },
   {
+    id: 11,
     name: "Devon Mundi Nze",
     role: "Mortgage Consultant",
     company: "Prime Mortgages LLC",
@@ -192,7 +205,7 @@ export const agents = [
     phone: "+971 56 341 1797",
     whatsapp: "971563411797",
     email: "devonmundi7@gmail.com",
-    linkedin: "www.linkedin.com/in/mundi-devon/",
+    linkedin: "https://www.linkedin.com/in/mundi-devon/",
     image: "/images/agents/Devon-Mundi.jpeg",
     specialty: "Home Finance"
   },
@@ -212,6 +225,17 @@ export const agents = [
   //   specialty: "Islamic Finance"
   // },
 ];
+
+// Slugs are derived rather than hand-written so they can never drift from the name.
+export const agents = agentList.map((agent) => ({
+  ...agent,
+  slug: slugify(agent.name),
+  href: `/our-agents/${slugify(agent.name)}`,
+}));
+
+export function getAgentBySlug(slug) {
+  return agents.find((agent) => agent.slug === slug);
+}
 
 export const WaIcon = () => (
   <svg className="w-4 h-4 text-whatsapp" fill="currentColor" viewBox="0 0 24 24">
@@ -242,7 +266,7 @@ export const bankLogos = [
   { name: "Arab Bank", src: "/images/banks/arab-bank.png" },
   { name: "Commercial Bank Of Dubai", src: "/images/banks/cbd.png" },
   { name: "Dubai Islamic Bank", src: "/images/banks/dib.png" },
-  { name: "Emirated Islamic", src: "/images/banks/eib.png" },
+  { name: "Emirates Islamic", src: "/images/banks/eib.png" },
   { name: "Emirates NBD", src: "/images/banks/emirates-nbd.png" },
   { name: "FAB", src: "/images/banks/fab.png" },
   { name: "HSBC", src: "/images/banks/hsbc.png" },
@@ -255,25 +279,25 @@ export const contactInfo = [
   {
     icon: Mail,
     title: "Email Us",
-    value: "info@mortgageconnect.ae",
+    value: site.email,
     sub: "We reply within 24 hours",
-    href: `mailto:${process.env.NEXT_PUBLIC_EMAIL}`,
+    href: `mailto:${site.email}`,
     cta: "Send Email",
   },
   {
     icon: Phone,
     title: "Call Us",
-    value: "+971 50 564 9126",
+    value: site.phoneDisplay,
     sub: "Sun – Thu, 9am – 6pm GST",
-    href: `tel:${process.env.NEXT_PUBLIC_PHONE}`,
+    href: site.phoneHref,
     cta: "Call Now",
   },
   {
     icon: MessageCircle,
     title: "WhatsApp",
-    value: "+971 50 564 9126",
+    value: site.phoneDisplay,
     sub: "Fastest way to reach us",
-    href: `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`,
+    href: site.whatsappHref,
     cta: "Message Us",
     whatsapp: true,
   },
@@ -281,7 +305,7 @@ export const contactInfo = [
     icon: MapPin,
     title: "Visit Us",
     value: "Sheikh Zayed Road, Dubai",
-    sub: `${process.env.NEXT_PUBLIC_EMAIL}`,
+    sub: site.email,
     href: "https://maps.google.com/?q=Aspen+Commercial+Tower+Sheikh+Zayed+Road+Dubai",
     cta: "Get Directions",
   },
@@ -290,19 +314,19 @@ export const contactInfo = [
 export const socialLinks = [
   {
     label: "Instagram",
-    href: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com/mortgageconnect.ae",
+    href: site.social.instagram,
     icon: InstagramIcon,
     hoverColor: "hover:text-pink-400 hover:border-pink-400/40",
   },
   {
     label: "Facebook",
-    href: process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://facebook.com/mortgageconnect.ae",
+    href: site.social.facebook,
     icon: FacebookIcon,
     hoverColor: "hover:text-blue-400 hover:border-blue-400/40",
   },
   {
     label: "LinkedIn",
-    href: process.env.NEXT_PUBLIC_LINKEDIN_URL || "https://linkedin.com/company/mortgageconnect-ae",
+    href: site.social.linkedin,
     icon: LinkedInIcon,
     hoverColor: "hover:text-blue-500 hover:border-blue-500/40",
   }

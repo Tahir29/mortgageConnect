@@ -2,18 +2,16 @@
 
 import { useRef, useEffect, useState } from "react";
 import { Search, SlidersHorizontal, X, ChevronDown } from "lucide-react";
-import { agents } from "@/lib/helper";
-
-// ─── Derive filter options from data ──────────────────────────
-export const specialties = [...new Set(agents.map((a) => a.specialty))].sort();
-export const locations   = [...new Set(agents.map((a) => a.location))].sort();
-export const companies   = [...new Set(agents.map((a) => a.company))].sort();
-export const languages   = [...new Set(agents.flatMap((a) => a.languages))].sort();
+import { FILTER_GROUPS, countForOption } from "@/lib/agentFilters";
 
 // ─── Dropdown ─────────────────────────────────────────────────
-function FilterDropdown({ label, options, value, onChange }) {
+function FilterDropdown({ group, filters, onChange }) {
+  const { key, label, plural, options } = group;
+  const value = filters[key];
+
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+  const triggerRef = useRef(null);
 
   useEffect(() => {
     const handler = (e) => {
@@ -23,10 +21,29 @@ function FilterDropdown({ label, options, value, onChange }) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  const select = (opt) => {
+    onChange(key, opt);
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
+
+  // Escape closes the list and hands focus back to the trigger.
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape" && open) {
+      e.stopPropagation();
+      setOpen(false);
+      triggerRef.current?.focus();
+    }
+  };
+
   return (
-    <div ref={ref} className="relative flex-1 min-w-37.5">
+    <div ref={ref} onKeyDown={handleKeyDown} className="relative flex-1 min-w-37.5">
       <button
+        ref={triggerRef}
+        type="button"
         onClick={() => setOpen((v) => !v)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
         className={`w-full flex items-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium transition-all duration-200
           ${value
             ? "border-accent bg-accent/5 text-foreground"
@@ -40,25 +57,48 @@ function FilterDropdown({ label, options, value, onChange }) {
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 right-0 mt-1.5 z-30 bg-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] border border-gray-100 overflow-hidden">
-          <div
-            onClick={() => { onChange(""); setOpen(false); }}
-            className="px-4 py-3 text-sm text-gray-400 hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+        <div
+          role="listbox"
+          aria-label={label}
+          className="absolute top-full left-0 right-0 mt-1.5 z-30 bg-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] border border-gray-100 overflow-hidden max-h-80 overflow-y-auto"
+        >
+          <button
+            type="button"
+            role="option"
+            aria-selected={value === ""}
+            onClick={() => select("")}
+            className="w-full text-left px-4 py-3 text-sm text-gray-400 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none cursor-pointer border-b border-gray-100"
           >
-            All {label}s
-          </div>
-          {options.map((opt) => (
-            <div
-              key={opt}
-              onClick={() => { onChange(opt); setOpen(false); }}
-              className={`px-4 py-3 text-sm cursor-pointer transition-colors duration-150
-                ${value === opt
-                  ? "bg-accent/10 text-foreground font-semibold"
-                  : "text-gray-700 hover:bg-gray-50"}`}
-            >
-              {opt}
-            </div>
-          ))}
+            All {plural}
+          </button>
+          {options.map((opt) => {
+            const selected = value === opt;
+            // Counts reflect the other active filters, matching the mobile sheet:
+            // an option that would return nothing is shown as 0 and disabled.
+            const count = countForOption(filters, key, opt);
+            const empty = count === 0 && !selected;
+
+            return (
+              <button
+                key={opt}
+                type="button"
+                role="option"
+                aria-selected={selected}
+                disabled={empty}
+                onClick={() => select(opt)}
+                className={`w-full flex items-center justify-between gap-2 px-4 py-3 text-sm transition-colors duration-150 focus:outline-none
+                  ${selected
+                    ? "bg-accent/10 text-foreground font-semibold"
+                    : "text-gray-700"}
+                  ${empty
+                    ? "opacity-40 cursor-not-allowed"
+                    : "cursor-pointer hover:bg-gray-50 focus:bg-gray-50"}`}
+              >
+                <span className="truncate">{opt}</span>
+                <span className="text-gray-400 text-xs shrink-0">({count})</span>
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
@@ -66,18 +106,14 @@ function FilterDropdown({ label, options, value, onChange }) {
 }
 
 // ─── Filter Bar ───────────────────────────────────────────────
-export default function FilterBar({
-  search, setSearch,
-  specialty, setSpecialty,
-  location, setLocation,
-  company, setCompany,
-  language, setLanguage,
-  totalResults,
-  onClear,
-  hasFilters,
-}) {
+export default function FilterBar({ filters, setFilter, totalResults, onClear, hasFilters }) {
+  const activePills = FILTER_GROUPS.filter((g) => filters[g.key]).map((g) => ({
+    key: g.key,
+    label: filters[g.key],
+  }));
+
   return (
-    <div className="bg-white border-b border-gray-100 sticky top-15 z-20 shadow-[0_4px_24px_rgba(10,22,40,0.06)]">
+    <div className="hidden md:block bg-white border-b border-gray-100 sticky top-15 z-20 shadow-[0_4px_24px_rgba(10,22,40,0.06)]">
       <div className="container-site py-4">
 
         {/* Row 1 — search + dropdowns */}
@@ -89,13 +125,15 @@ export default function FilterBar({
             <input
               type="text"
               placeholder="Search name, company..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              value={filters.search}
+              onChange={(e) => setFilter("search", e.target.value)}
               className="w-full pl-10 pr-8 py-3 rounded-xl border border-gray-200 text-sm text-foreground placeholder:text-gray-400 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all duration-200"
             />
-            {search && (
+            {filters.search && (
               <button
-                onClick={() => setSearch("")}
+                type="button"
+                onClick={() => setFilter("search", "")}
+                aria-label="Clear search"
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
                 <X size={13} />
@@ -103,17 +141,22 @@ export default function FilterBar({
             )}
           </div>
 
-          {/* Four dropdowns */}
+          {/* Dropdowns — same groups, in the same order, as the mobile sheet */}
           <div className="flex flex-wrap gap-3 flex-1">
-            {/* <FilterDropdown label="Specialty" options={specialties} value={specialty} onChange={setSpecialty} /> */}
-            <FilterDropdown label="Location"  options={locations}   value={location}  onChange={setLocation}  />
-            <FilterDropdown label="Language"  options={languages}   value={language}  onChange={setLanguage}  />
-            <FilterDropdown label="Company"   options={companies}   value={company}   onChange={setCompany}   />
+            {FILTER_GROUPS.map((group) => (
+              <FilterDropdown
+                key={group.key}
+                group={group}
+                filters={filters}
+                onChange={setFilter}
+              />
+            ))}
           </div>
 
           {/* Clear all */}
           {hasFilters && (
             <button
+              type="button"
               onClick={onClear}
               className="flex items-center gap-2 px-4 py-3 rounded-xl border border-red-200 text-red-500 text-sm font-medium hover:bg-red-50 transition-all duration-200 shrink-0"
             >
@@ -132,18 +175,18 @@ export default function FilterBar({
               {totalResults === 1 ? "agent" : "agents"}
             </span>
 
-            {[
-              specialty && { label: specialty, clear: () => setSpecialty("") },
-              location  && { label: location,  clear: () => setLocation("") },
-              language  && { label: language,  clear: () => setLanguage("") },
-              company   && { label: company,   clear: () => setCompany("") },
-            ].filter(Boolean).map((pill) => (
+            {activePills.map((pill) => (
               <span
-                key={pill.label}
+                key={pill.key}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/10 border border-accent/25 text-foreground text-[10px] font-semibold"
               >
                 {pill.label}
-                <button onClick={pill.clear} className="text-accent hover:text-foreground transition-colors">
+                <button
+                  type="button"
+                  onClick={() => setFilter(pill.key, "")}
+                  aria-label={`Remove ${pill.label} filter`}
+                  className="text-accent hover:text-foreground transition-colors"
+                >
                   <X size={10} />
                 </button>
               </span>

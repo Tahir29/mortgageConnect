@@ -1,8 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useVisible } from "@/hooks/useVisible";
+
+const collage = [
+  { src: "/images/about/whyWeBuilt1.jpg", alt: "Dubai real estate", className: "" },
+  { src: "/images/about/whyWeBuilt2.jpg", alt: "UAE skyline",       className: "mt-8" },
+  { src: "/images/about/whyWeBuilt3.jpg", alt: "Meeting",           className: "-mt-8" },
+  { src: "/images/about/whyWeBuilt4.jpg", alt: "Finance",           className: "" },
+];
 
 export default function WhyWeBuiltThis() {
   const [ref, visible] = useVisible(0.1);
@@ -15,26 +23,17 @@ export default function WhyWeBuiltThis() {
           {/* Left — Images collage */}
           <div className={visible ? "opacity-100 translate-y-0 transition-all duration-700" : "opacity-0 -translate-y-10 transition-all duration-700"}>
             <div className="grid grid-cols-2 gap-4">
-              <img
-                src="/images/about/whyWeBuilt1.jpg"
-                alt="Dubai real estate"
-                className="rounded-2xl object-cover w-full aspect-square shadow-lg"
-              />
-              <img
-                src="/images/about/whyWeBuilt2.jpg"
-                alt="UAE skyline"
-                className="rounded-2xl object-cover w-full aspect-square shadow-lg mt-8"
-              />
-              <img
-                src="/images/about/whyWeBuilt3.jpg"
-                alt="Meeting"
-                className="rounded-2xl object-cover w-full aspect-square shadow-lg -mt-8"
-              />
-              <img
-                src="/images/about/whyWeBuilt4.jpg"
-                alt="Finance"
-                className="rounded-2xl object-cover w-full aspect-square shadow-lg"
-              />
+              {collage.map((img) => (
+                <div key={img.src} className={`relative w-full aspect-square ${img.className}`}>
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    className="rounded-2xl object-cover shadow-lg"
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
@@ -59,17 +58,17 @@ export default function WhyWeBuiltThis() {
 
             <div className="mt-8 space-y-4">
               {[
-                "UAE&apos;s first structured mortgage broker marketplace",
+                "UAE's first structured mortgage broker marketplace",
                 "Verified profiles — only compliant, registered professionals",
                 "Direct contact — no commissions, no sign-up required",
-              ].map((point, i) => (
-                <div key={i} className="flex items-start gap-3">
+              ].map((point) => (
+                <div key={point} className="flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-accent flex items-center justify-center shrink-0 mt-0.5">
                     <svg className="w-2.5 h-2.5 text-foreground" fill="none" viewBox="0 0 10 8">
                       <path d="M1 4l2.5 2.5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
-                  <p className="text-foreground text-sm font-medium" dangerouslySetInnerHTML={{ __html: point }} />
+                  <p className="text-foreground text-sm font-medium">{point}</p>
                 </div>
               ))}
             </div>

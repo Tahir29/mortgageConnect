@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { WaIcon } from "@/lib/helper";
 import { ArrowRight } from "lucide-react";
+import { site } from "@/lib/config";
 
 export default function CTABanner() {
   const [visible, setVisible] = useState(false);
@@ -56,7 +57,7 @@ export default function CTABanner() {
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
             </Link>
             <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}
+              href={site.whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-8 py-4 rounded-full border-2 border-white/30 text-white font-semibold text-sm tracking-wide hover:border-white/60 hover:bg-white/8 transition-all duration-300"

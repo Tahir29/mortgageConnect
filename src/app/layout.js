@@ -1,6 +1,8 @@
 import {Inter, Playfair_Display} from "next/font/google";
 import { Footer, Header } from "@/components/common/";
 import { ScrollToTop } from "@/components/common/";
+import { JsonLd } from "@/components/common/";
+import { organizationSchema, websiteSchema } from "@/lib/schema";
 import "./globals.css";
 
 const inter = Inter({
@@ -94,8 +96,10 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <JsonLd data={organizationSchema()} />
+        <JsonLd data={websiteSchema()} />
         <Header />
-        <main>
+        <main className="flex-1">
           {children}
           <ScrollToTop />
         </main>

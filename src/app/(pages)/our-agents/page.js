@@ -1,7 +1,10 @@
 import { AgentHero, AgentsGrid } from "@/components/agent";
 import { BankMarquee } from "@/components/home";
+import { agents } from "@/lib/helper";
+import { baseUrl } from "@/lib/config";
+import { JsonLd } from "@/components/common";
+import { agentListSchema, breadcrumbSchema } from "@/lib/schema";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mortgageconnect.ae";
 
 export const metadata = {
   title: "Our Agents | Browse Verified Mortgage Consultants in UAE",
@@ -29,7 +32,7 @@ export const metadata = {
     siteName: "Mortgage Connect",
     images: [
       {
-        url: `${baseUrl}/og-agents.jpg`,
+        url: `${baseUrl}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Verified Mortgage Agents in UAE",
@@ -41,7 +44,7 @@ export const metadata = {
     title: "Browse Verified Mortgage Agents in UAE | Mortgage Connect",
     description:
       "Find and connect with verified mortgage professionals across all 7 emirates — instantly and for free.",
-    images: [`${baseUrl}/og-agents.jpg`],
+    images: [`${baseUrl}/og-image.jpg`],
   },
   robots: {
     index: true,
@@ -56,11 +59,23 @@ export const metadata = {
   },
 };
 
-export default function OurAgents() {
+export default async function OurAgents({ searchParams }) {
+  // Deep link from a company card: /our-agents?company=Baytech%20Mortgage%20Broker
+  // Ignore anything that isn't a company we actually list, so a stale or hand-typed
+  // link falls back to the full grid instead of an empty state.
+  const { company } = await searchParams;
+  const requested = Array.isArray(company) ? company[0] : company;
+  const initialCompany = agents.some((a) => a.company === requested) ? requested : "";
+
   return (
     <>
+      <JsonLd data={agentListSchema(agents)} />
+      <JsonLd data={breadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Our Agents", path: "/our-agents" },
+      ])} />
       <AgentHero />
-      <AgentsGrid />
+      <AgentsGrid initialCompany={initialCompany} />
       <BankMarquee />
     </>
   );

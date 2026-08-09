@@ -43,6 +43,12 @@ function Slider({ min, max, value, onChange, step = 1 }) {
   );
 }
 
+function formatUnit(value, unit) {
+  if (unit === "%") return `${value}%`;
+  if (unit === "years") return `${value} ${value === 1 ? "year" : "years"}`;
+  return `${formatAED(value)} AED`;
+}
+
 function SliderRow({ label, min, max, value, onChange, step, displayValue, unit = "AED", hint }) {
   return (
     <div className="space-y-3">
@@ -59,13 +65,14 @@ function SliderRow({ label, min, max, value, onChange, step, displayValue, unit 
           )}
         </div>
         <span className="text-sm font-semibold text-accent">
-          {unit === "%" ? `${value}%` : `${formatAED(displayValue ?? value)} AED`}
+          {formatUnit(value, unit)}
+          {displayValue != null && ` · ${formatAED(displayValue)} AED`}
         </span>
       </div>
       <Slider min={min} max={max} value={value} onChange={onChange} step={step} />
       <div className="flex justify-between text-[10px] text-gray-400">
-        <span>{unit === "%" ? `${min}%` : `${formatAED(min)} AED`}</span>
-        <span>{unit === "%" ? `${max}%` : `${formatAED(max)} AED`}</span>
+        <span>{formatUnit(min, unit)}</span>
+        <span>{formatUnit(max, unit)}</span>
       </div>
     </div>
   );
@@ -83,10 +90,11 @@ export default function MortgageCalculator() {
   const minDown = DOWN_PAYMENT_MAP[residency];
   const [downPaymentPct, setDownPaymentPct] = useState(minDown);
 
-  // Sync min down payment when residency changes
-  useEffect(() => {
-    setDownPaymentPct(DOWN_PAYMENT_MAP[residency]);
-  }, [residency]);
+  // Reset the down payment to the new minimum when residency changes.
+  const selectResidency = (value) => {
+    setResidency(value);
+    setDownPaymentPct(DOWN_PAYMENT_MAP[value]);
+  };
 
   const downPaymentAED = (purchasePrice * downPaymentPct) / 100;
   const loanAmount = purchasePrice - downPaymentAED;
@@ -147,7 +155,7 @@ export default function MortgageCalculator() {
                 {RESIDENCY_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
-                    onClick={() => setResidency(opt.value)}
+                    onClick={() => selectResidency(opt.value)}
                     className={residency === opt.value
                       ? "flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold border-2 border-accent bg-accent/10 text-foreground transition-all duration-200"
                       : "flex-1 py-2.5 px-3 rounded-xl text-xs font-medium border-2 border-gray-200 text-gray-500 hover:border-gray-300 transition-all duration-200"}
@@ -179,15 +187,9 @@ export default function MortgageCalculator() {
               step={1}
               value={loanPeriod}
               onChange={setLoanPeriod}
-              unit="%"
+              unit="years"
               hint="Maximum 25 years in UAE"
             />
-            {/* override display for years */}
-            <div className="-mt-6 flex items-center justify-between px-0.5">
-              <span className="text-[10px] text-gray-400">1 year</span>
-              <span className="text-sm font-semibold text-accent">{loanPeriod} {loanPeriod === 1 ? "year" : "years"}</span>
-              <span className="text-[10px] text-gray-400">25 years</span>
-            </div>
 
             {/* Interest Rate */}
             <SliderRow
@@ -200,11 +202,6 @@ export default function MortgageCalculator() {
               unit="%"
               hint="Current UAE average is ~3.75–4.5%"
             />
-            <div className="-mt-6 flex items-center justify-between px-0.5">
-              <span className="text-[10px] text-gray-400">1%</span>
-              <span className="text-sm font-semibold text-accent">{interestRate.toFixed(2)}%</span>
-              <span className="text-[10px] text-gray-400">10%</span>
-            </div>
           </div>
 
           {/* Right — Results */}

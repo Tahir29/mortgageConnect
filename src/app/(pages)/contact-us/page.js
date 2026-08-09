@@ -1,8 +1,8 @@
 import { ContactHero, InfoCards, ContactForm } from "@/components/contact";
+import { baseUrl } from "@/lib/config";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mortgageconnect.ae";
 
-export const contactMetadata = {
+export const metadata = {
   title: "Contact Us | Get in Touch with Mortgage Connect UAE",
   description:
     "Contact Mortgage Connect UAE for any queries about mortgage agents, home loans, or our platform. Reach us via WhatsApp, phone, or email. Office located on Sheikh Zayed Road, Dubai.",
@@ -27,7 +27,7 @@ export const contactMetadata = {
     siteName: "Mortgage Connect",
     images: [
       {
-        url: `${baseUrl}/og-contact.jpg`,
+        url: `${baseUrl}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Contact Mortgage Connect UAE",
@@ -39,7 +39,7 @@ export const contactMetadata = {
     title: "Contact Mortgage Connect UAE | We're Here to Help",
     description:
       "Reach our team via WhatsApp, phone, or email. Sheikh Zayed Road, Dubai. We respond within 24 hours.",
-    images: [`${baseUrl}/og-contact.jpg`],
+    images: [`${baseUrl}/og-image.jpg`],
   },
   robots: {
     index: true,

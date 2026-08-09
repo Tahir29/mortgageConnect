@@ -1,10 +1,13 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import { Quote } from "lucide-react";
 import { useVisible } from "@/hooks/useVisible";
 
 export default function MDSection() {
   const [ref, visible] = useVisible(0.1);
+  const [imageFailed, setImageFailed] = useState(false);
 
   return (
     <section ref={ref} className="section-padding bg-white">
@@ -16,20 +19,21 @@ export default function MDSection() {
             <div className="relative">
               {/* Gold frame decoration */}
               <div className="absolute -top-4 -left-4 w-full h-full rounded-3xl border-2 border-accent/20" />
-              <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(10,22,40,0.15)]">
-                <img
-                  src="/images/Ehsan-Jamshidzadeh.jpg"
-                  alt="Ehsan Jamshidzadeh — Managing Director"
-                  className="w-full object-cover object-top aspect-4/5"
-                  onError={(e) => {
-                    e.target.style.display = "none";
-                    e.target.nextSibling.style.display = "flex";
-                  }}
-                />
-                {/* Fallback */}
-                <div className="hidden w-full aspect-4/5 bg-foreground items-center justify-center">
-                  <span className="text-accent font-display text-6xl font-bold">EJ</span>
-                </div>
+              <div className="relative w-full aspect-4/5 rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(10,22,40,0.15)]">
+                {imageFailed ? (
+                  <div className="w-full h-full bg-foreground flex items-center justify-center">
+                    <span className="text-accent font-display text-6xl font-bold">EJ</span>
+                  </div>
+                ) : (
+                  <Image
+                    src="/images/Ehsan-Jamshidzadeh.jpg"
+                    alt="Ehsan Jamshidzadeh — Managing Director"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover object-top"
+                    onError={() => setImageFailed(true)}
+                  />
+                )}
               </div>
 
               {/* Floating badge */}
@@ -52,7 +56,7 @@ export default function MDSection() {
             <div className="relative pl-6 mb-8 border-l-2 border-accent">
               <Quote size={28} className="text-accent/20 absolute -top-2 -left-1" />
               <p className="text-foreground text-lg font-display font-medium leading-relaxed italic">
-                "Mortgage Connect UAE is not a brokerage — it's an identity and selection platform, allowing the market to operate with clarity, trust, and accountability."
+                &ldquo;Mortgage Connect UAE is not a brokerage — it&apos;s an identity and selection platform, allowing the market to operate with clarity, trust, and accountability.&rdquo;
               </p>
             </div>
 

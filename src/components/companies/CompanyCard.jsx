@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Building2, Users, MapPin, Globe, MessageCircle } from "lucide-react";
 
 export default function CompanyCard({ company, index, visible }) {
@@ -78,9 +79,11 @@ export default function CompanyCard({ company, index, visible }) {
             {company.agents.slice(0, 4).map((agent, i) => (
               <div key={agent.id} className="relative" style={{ zIndex: 10 - i }}>
                 {agent.image ? (
-                  <img
+                  <Image
                     src={agent.image}
                     alt={agent.name}
+                    width={32}
+                    height={32}
                     className="w-8 h-8 rounded-full object-cover object-top border-2 border-white"
                   />
                 ) : (

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navLinks, WaIcon } from "@/lib/helper";
 import { Menu, X } from "lucide-react";
+import { site } from "@/lib/config";
 
 export default function Header() {
   const pathname = usePathname();
@@ -24,9 +25,13 @@ export default function Header() {
     return () => { document.body.style.overflow = ""; };
   }, [isMenuOpen]);
 
-  useEffect(() => {
+  // Close the drawer on navigation (incl. browser back/forward, which the
+  // per-link onClick handlers don't cover) by adjusting state during render.
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
     setIsMenuOpen(false);
-  }, [pathname]);
+  }
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -76,7 +81,7 @@ export default function Header() {
           {/* Desktop CTAs */}
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}
+              href={site.whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 text-white/80 text-sm font-medium hover:border-white/50 hover:text-white transition-all duration-200"
@@ -150,7 +155,7 @@ export default function Header() {
 
         <div className="px-4 py-6 border-t border-white/10 flex flex-col gap-3">
           <a
-            href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}
+            href={site.whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
             onClick={closeMenu}

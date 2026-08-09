@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useVisible } from "@/hooks/useVisible";
 import { Mail, MapPin, Phone, Send, CheckCircle, MessageCircle } from "lucide-react";
+import { site } from "@/lib/config";
 
 export default function ContactForm() {
   const [ref, visible] = useVisible(0.1);
@@ -212,8 +213,7 @@ export default function ContactForm() {
                   <div>
                     <p className="text-white font-semibold text-sm mb-0.5">Address</p>
                     <p className="text-white/50 text-xs leading-relaxed">
-                      Floor 2, Office 18, Aspen Commercial Tower,<br />
-                      Sheikh Zayed Road, Dubai, UAE
+                      {site.address}
                     </p>
                   </div>
                 </div>
@@ -226,8 +226,8 @@ export default function ContactForm() {
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm mb-0.5">Phone</p>
-                    <a href="tel:+971505649126" className="text-white/50 text-xs hover:text-accent transition-colors duration-200">
-                      +971 50 564 9126
+                    <a href={site.phoneHref} className="text-white/50 text-xs hover:text-accent transition-colors duration-200">
+                      {site.phoneDisplay}
                     </a>
                   </div>
                 </div>
@@ -240,8 +240,8 @@ export default function ContactForm() {
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm mb-0.5">Email</p>
-                    <a href="mailto:info@mortgageconnect.ae" className="text-white/50 text-xs hover:text-accent transition-colors duration-200">
-                      info@mortgageconnect.ae
+                    <a href={`mailto:${site.email}`} className="text-white/50 text-xs hover:text-accent transition-colors duration-200">
+                      {site.email}
                     </a>
                   </div>
                 </div>
@@ -255,12 +255,12 @@ export default function ContactForm() {
                   <div>
                     <p className="text-white font-semibold text-sm mb-0.5">WhatsApp</p>
                     <a
-                      href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}
+                      href={site.whatsappHref}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-white/50 text-xs hover:text-whatsapp transition-colors duration-200"
                     >
-                      +971 50 564 9126
+                      {site.phoneDisplay}
                     </a>
                   </div>
                 </div>

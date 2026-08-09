@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { baseUrl } from "@/lib/config";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mortgageconnect.ae";
 
 export const metadata = {
   title: "Terms of Use | Mortgage Connect UAE",
@@ -41,7 +41,7 @@ Users are encouraged to conduct their own due diligence before engaging with any
   },
   {
     title: "5. Disclaimer of Warranties",
-    content: `The platform is provided on an &quot;as is&quot; and &quot;as available&quot; basis without any warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, or non-infringement.
+    content: `The platform is provided on an "as is" and "as available" basis without any warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, or non-infringement.
 
 We do not warrant that the platform will be uninterrupted, error-free, or free of viruses or other harmful components. We do not warrant the accuracy or completeness of any information on the platform.`,
   },
@@ -120,7 +120,7 @@ export default function TermsOfUsePage() {
       <section className="container-site py-16 max-w-3xl">
         <p className="text-gray-600 text-base leading-relaxed mb-10">
           Please read these Terms of Use carefully before using the Mortgage Connect UAE platform. These terms govern your access to and use of our website at{" "}
-          <a href="/" className="text-accent hover:underline">mortgageconnect.ae</a>{" "}
+          <Link href="/" className="text-accent hover:underline">mortgageconnect.ae</Link>{" "}
           and all related services provided by Mortgage Connect UAE.
         </p>
 

@@ -1,6 +1,6 @@
-export default function robots() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mortgageconnect.ae";
+import { baseUrl } from "@/lib/config";
 
+export default function robots() {
   return {
     rules: [
       {
