@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Star, Phone, MessageCircle, Mail, Globe, TrendingUp, ArrowRight } from "lucide-react";
 import { LinkedInIcon } from "@/lib/helper"
 import { toDialable } from "@/lib/utils"
-import { staggerDelay } from "@/lib/utils";
 
 function Stars({ rating }) {
   return (
@@ -19,7 +18,7 @@ export default function AgentCard({ agent, index, visible }) {
     const initials = agent.name.split(" ").map((n) => n[0]).join("").slice(0, 2);
   return (
     <div
-      style={{ transitionDelay: staggerDelay(index) }}
+      style={{ transitionDelay: `${index * 100}ms` }}
       className={visible
         ? "group bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(10,22,40,0.08)] hover:shadow-[0_12px_48px_rgba(10,22,40,0.15)] border border-gray-100 hover:border-accent/40 transition-all duration-500 opacity-100 translate-y-0"
         : "group bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(10,22,40,0.08)] border border-gray-100 transition-all duration-500 opacity-0 translate-y-10"}

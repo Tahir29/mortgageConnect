@@ -1,10 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Info } from "lucide-react";
 import Link from "next/link";
-import { useVisible } from "@/hooks/useVisible";
-import { useAnimatedNumber } from "@/hooks/useAnimatedNumber";
 
 const RESIDENCY_OPTIONS = [
   { value: "resident", label: "UAE Resident" },
@@ -81,7 +79,8 @@ function SliderRow({ label, min, max, value, onChange, step, displayValue, unit 
 }
 
 export default function MortgageCalculator() {
-  const [ref, visible] = useVisible();
+  const [visible, setVisible] = useState(false);
+  const ref = useRef(null);
 
   const [purchasePrice, setPurchasePrice] = useState(1500000);
   const [residency, setResidency] = useState("resident");
@@ -108,21 +107,21 @@ export default function MortgageCalculator() {
   const totalPayment = monthlyPayment * numPayments;
   const totalInterest = totalPayment - loanAmount;
 
-  // Only the results panel eases. The slider readouts on the left stay exact so
-  // they track the thumb — input responds instantly, output animates.
-  const shownMonthly = useAnimatedNumber(monthlyPayment);
-  const shownPurchase = useAnimatedNumber(purchasePrice);
-  const shownDownPayment = useAnimatedNumber(downPaymentAED);
-  const shownLoanAmount = useAnimatedNumber(loanAmount);
-  const shownTotalInterest = useAnimatedNumber(totalInterest);
-  const shownTotalPayment = useAnimatedNumber(totalPayment);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section ref={ref} className="section-padding bg-brand-cream">
       <div className="container-site">
 
         {/* Header */}
-        <div className={visible ? "text-center mb-14 opacity-100 translate-y-0 transition-all duration-500" : "text-center mb-14 opacity-0 translate-y-8 transition-all duration-500"}>
+        <div className={visible ? "text-center mb-14 opacity-100 translate-y-0 transition-all duration-700" : "text-center mb-14 opacity-0 translate-y-8 transition-all duration-700"}>
           <div className="gold-rule mx-auto mb-4" />
           <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-3">Plan Ahead</p>
           <h2 className="font-display text-3xl md:text-5xl font-semibold text-foreground">
@@ -133,7 +132,7 @@ export default function MortgageCalculator() {
           </p>
         </div>
 
-        <div className={visible ? "grid lg:grid-cols-2 gap-8 items-start opacity-100 translate-y-0 transition-all duration-500 delay-100" : "grid lg:grid-cols-2 gap-8 items-start opacity-0 translate-y-8 transition-all duration-500 delay-100"}>
+        <div className={visible ? "grid lg:grid-cols-2 gap-8 items-start opacity-100 translate-y-0 transition-all duration-700 delay-100" : "grid lg:grid-cols-2 gap-8 items-start opacity-0 translate-y-8 transition-all duration-700 delay-100"}>
 
           {/* Left — Inputs */}
           <div className="bg-white rounded-3xl p-8 shadow-[0_4px_24px_rgba(10,22,40,0.08)] border border-gray-100 space-y-8">
@@ -217,8 +216,8 @@ export default function MortgageCalculator() {
               <p className="text-white/50 text-xs font-medium tracking-widest uppercase mb-3">
                 Estimated Monthly Payment
               </p>
-              <div className="font-display text-5xl font-bold text-accent mb-1 tabular-nums">
-                {formatAED(shownMonthly)}
+              <div className="font-display text-5xl font-bold text-accent mb-1">
+                {formatAED(monthlyPayment)}
               </div>
               <p className="text-white/40 text-sm">AED / month</p>
 
@@ -237,14 +236,14 @@ export default function MortgageCalculator() {
             {/* Breakdown cards */}
             <div className="grid grid-cols-2 gap-4">
               {[
-                { label: "Purchase Price", value: formatAED(shownPurchase), unit: "AED" },
-                { label: "Down Payment", value: `${formatAED(shownDownPayment)}`, unit: `AED (${downPaymentPct}%)` },
-                { label: "Loan Amount", value: formatAED(shownLoanAmount), unit: "AED" },
-                { label: "Total Interest", value: formatAED(shownTotalInterest), unit: "AED" },
+                { label: "Purchase Price", value: formatAED(purchasePrice), unit: "AED" },
+                { label: "Down Payment", value: `${formatAED(downPaymentAED)}`, unit: `AED (${downPaymentPct}%)` },
+                { label: "Loan Amount", value: formatAED(loanAmount), unit: "AED" },
+                { label: "Total Interest", value: formatAED(totalInterest), unit: "AED" },
               ].map((item) => (
                 <div key={item.label} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-[0_2px_12px_rgba(10,22,40,0.06)]">
                   <p className="text-gray-400 text-[10px] uppercase tracking-wider mb-2">{item.label}</p>
-                  <p className="text-foreground font-bold text-lg leading-tight tabular-nums">{item.value}</p>
+                  <p className="text-foreground font-bold text-lg leading-tight">{item.value}</p>
                   <p className="text-gray-400 text-[10px] mt-0.5">{item.unit}</p>
                 </div>
               ))}
@@ -254,7 +253,7 @@ export default function MortgageCalculator() {
             <div className="bg-accent/10 border border-accent/25 rounded-2xl p-5 flex items-center justify-between">
               <div>
                 <p className="text-gray-500 text-xs uppercase tracking-wider mb-1">Total Repayment</p>
-                <p className="text-foreground font-bold text-2xl font-display tabular-nums">{formatAED(shownTotalPayment)}</p>
+                <p className="text-foreground font-bold text-2xl font-display">{formatAED(totalPayment)}</p>
                 <p className="text-gray-400 text-xs mt-0.5">AED over {loanPeriod} years</p>
               </div>
               <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center shrink-0">

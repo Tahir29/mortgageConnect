@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Building2, Users, MapPin, Globe, MessageCircle } from "lucide-react";
-import { staggerDelay } from "@/lib/utils";
 
 export default function CompanyCard({ company, index, visible }) {
   const initials = company.name
@@ -27,7 +26,7 @@ export default function CompanyCard({ company, index, visible }) {
 
   return (
     <div
-      style={{ transitionDelay: staggerDelay(index) }}
+      style={{ transitionDelay: `${index * 100}ms` }}
       className={`group bg-white rounded-3xl overflow-hidden border border-gray-100
         shadow-[0_4px_24px_rgba(10,22,40,0.08)]
         hover:shadow-[0_16px_56px_rgba(10,22,40,0.14)]

@@ -15,7 +15,7 @@ export default function MDSection() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
 
           {/* Left — Image */}
-          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-500" : "opacity-0 -translate-y-10 transition-all duration-500"}>
+          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-700" : "opacity-0 -translate-y-10 transition-all duration-700"}>
             <div className="relative">
               {/* Gold frame decoration */}
               <div className="absolute -top-4 -left-4 w-full h-full rounded-3xl border-2 border-accent/20" />
@@ -45,7 +45,7 @@ export default function MDSection() {
           </div>
 
           {/* Right — Content */}
-          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-500 delay-100" : "opacity-0 translate-y-10 transition-all duration-500 delay-100"}>
+          <div className={visible ? "opacity-100 translate-y-0 transition-all duration-700 delay-100" : "opacity-0 translate-y-10 transition-all duration-700 delay-100"}>
             <div className="gold-rule mb-5" />
             <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-4">MD Speaks</p>
             <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground leading-tight mb-6">

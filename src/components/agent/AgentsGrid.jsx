@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { AgentCard } from "@/components/common";
 import { FilterBar, EmptyState, MobileFilterSheet } from "@/components/agent";
-import { useVisible } from "@/hooks/useVisible";
 import {
   EMPTY_FILTERS,
   FILTER_GROUPS,
@@ -15,9 +14,12 @@ import {
 
 export default function AgentsGrid({ initialCompany = "" }) {
   const [filters, setFilters] = useState({ ...EMPTY_FILTERS, company: initialCompany });
-  // Was gated behind an arbitrary 300ms timer, which delayed the site's most
-  // commercially important content for no reason.
-  const [gridRef, visible] = useVisible(0.05);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 300);
+    return () => clearTimeout(t);
+  }, []);
 
   const hasFilters = hasActiveFilters(filters);
   const filtered = useMemo(() => filterAgents(filters), [filters]);
@@ -47,7 +49,7 @@ export default function AgentsGrid({ initialCompany = "" }) {
 
       <MobileFilterSheet filters={filters} onApply={setFilters} />
 
-      <section ref={gridRef} className="section-padding bg-brand-cream">
+      <section className="section-padding bg-brand-cream">
         <div className="container-site">
 
           {/* Mobile-only result summary + active chips */}

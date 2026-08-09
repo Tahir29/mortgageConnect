@@ -26,18 +26,6 @@ export function formatPhone(phone) {
   return `+971 ${local.slice(0, 2)} ${local.slice(2, 5)} ${local.slice(5)}`;
 }
 
-/**
- * Staggered entrance delay, capped.
- *
- * An uncapped `index * step` means the last card in a long list waits for the
- * whole queue ahead of it — with 11 agents at 100ms that was a full second
- * before the final card began. Capping keeps the sense of sequence while
- * bounding the wait.
- */
-export function staggerDelay(index, step = 60, maxSteps = 4) {
-  return `${Math.min(index, maxSteps) * step}ms`;
-}
-
 /** Digits-only form for wa.me / tel: links. */
 export function toDialable(phone) {
   return String(phone).replace(/\D/g, "");

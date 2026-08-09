@@ -6,7 +6,6 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { bankLogos } from "@/lib/helper";
 import { useVisible } from "@/hooks/useVisible";
-import { staggerDelay } from "@/lib/utils";
 
 /**
  * Bank logos are horizontal wordmarks — all 40px tall, but from 1.7:1 to 8.8:1
@@ -44,8 +43,8 @@ export default function BankPartners() {
       <div className="container-site">
 
         <div className={visible
-          ? "text-center mb-12 opacity-100 translate-y-0 transition-all duration-500"
-          : "text-center mb-12 opacity-0 translate-y-8 transition-all duration-500"}>
+          ? "text-center mb-12 opacity-100 translate-y-0 transition-all duration-700"
+          : "text-center mb-12 opacity-0 translate-y-8 transition-all duration-700"}>
           <div className="gold-rule mx-auto mb-4" />
           <p className="text-accent text-xs font-semibold tracking-[0.3em] uppercase mb-3">Banking Network</p>
           <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground">
@@ -64,9 +63,9 @@ export default function BankPartners() {
             // never leaks into the tile's hover response.
             <div
               key={bank.name}
-              style={{ transitionDelay: staggerDelay(i) }}
+              style={{ transitionDelay: `${i * 60}ms` }}
               className={`basis-[calc(50%_-_0.375rem)] sm:basis-[calc(33.333%_-_0.667rem)] lg:basis-[calc(20%_-_0.8rem)]
-                transition-all duration-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+                transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
             >
               <div
                 className="group h-full flex flex-col items-center justify-center gap-4 px-4 py-6
@@ -88,7 +87,7 @@ export default function BankPartners() {
         </div>
 
         {/* Register CTA */}
-        <div className={`mt-14 flex flex-col sm:flex-row items-center justify-between gap-6 px-8 py-7 rounded-3xl bg-foreground relative overflow-hidden transition-all duration-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div className={`mt-14 flex flex-col sm:flex-row items-center justify-between gap-6 px-8 py-7 rounded-3xl bg-foreground relative overflow-hidden transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           <div
             className="absolute -right-16 -top-16 w-48 h-48 rounded-full opacity-10 pointer-events-none"
             style={{ background: "radial-gradient(circle, #C9A84C 0%, transparent 70%)" }}

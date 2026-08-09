@@ -1,7 +1,6 @@
 "use client";
 
-import { useVisible } from "@/hooks/useVisible";
-import { useAnimatedNumber } from "@/hooks/useAnimatedNumber";
+import { useEffect, useRef, useState } from "react";
 
 const stats = [
   { value: 5, suffix: "+", label: "Verified Agents" },
@@ -10,15 +9,29 @@ const stats = [
   { value: 98,  suffix: "%", label: "Client Satisfaction" },
 ];
 
+function useCountUp(target, duration, active) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    let start = null;
+    const step = (ts) => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [target, duration, active]);
+  return count;
+}
+
 function StatItem({ value, suffix, label, active }) {
-  // Counts from 0 up to `value` once the section is revealed. The shared hook
-  // cancels its frame loop on unmount, which the previous local implementation
-  // did not.
-  const count = useAnimatedNumber(active ? value : 0, 1400);
+  const count = useCountUp(value, 2000, active);
   return (
     <div className="flex flex-col items-center text-center px-4">
-      <span className="text-3xl md:text-4xl font-bold font-display text-accent tabular-nums">
-        {Math.round(count)}{suffix}
+      <span className="text-3xl md:text-4xl font-bold font-display text-accent">
+        {count}{suffix}
       </span>
       <span className="text-white/50 text-xs md:text-sm mt-1.5 tracking-wide">{label}</span>
     </div>
@@ -26,7 +39,17 @@ function StatItem({ value, suffix, label, active }) {
 }
 
 export default function Stats() {
-  const [ref, active] = useVisible(0.4);
+  const [active, setActive] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setActive(true); },
+      { threshold: 0.4 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section ref={ref} className="bg-foreground relative overflow-hidden border-y border-white/10">

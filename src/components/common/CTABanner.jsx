@@ -1,13 +1,23 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { WaIcon } from "@/lib/helper";
 import { ArrowRight } from "lucide-react";
 import { site } from "@/lib/config";
-import { useVisible } from "@/hooks/useVisible";
 
 export default function CTABanner() {
-  const [ref, visible] = useVisible();
+  const [visible, setVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.2 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section ref={ref} className="relative py-24 overflow-hidden">
@@ -26,8 +36,8 @@ export default function CTABanner() {
 
       <div className="container-site relative z-10 text-center">
         <div className={visible
-          ? "opacity-100 translate-y-0 transition-all duration-500"
-          : "opacity-0 translate-y-8 transition-all duration-500"}>
+          ? "opacity-100 translate-y-0 transition-all duration-700"
+          : "opacity-0 translate-y-8 transition-all duration-700"}>
           <div className="gold-rule mx-auto mb-6" />
           <h2 className="font-display text-3xl sm:text-4xl md:text-6xl font-semibold text-white leading-tight max-w-3xl mx-auto">
             Ready to Find Your{" "}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useVisible } from "@/hooks/useVisible";
-import { staggerDelay } from "@/lib/utils";
 
 export default function CompanyStats({ companies }) {
   const [ref, visible] = useVisible(0.3);
@@ -36,8 +35,8 @@ export default function CompanyStats({ companies }) {
           {stats.map((stat, i) => (
             <div
               key={stat.label}
-              style={{ transitionDelay: staggerDelay(i) }}
-              className={`flex flex-col items-center text-center transition-all duration-500
+              style={{ transitionDelay: `${i * 100}ms` }}
+              className={`flex flex-col items-center text-center transition-all duration-700
                 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
             >
               <span className="text-3xl md:text-4xl font-bold font-display text-accent px-4">
