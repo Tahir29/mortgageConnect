@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ArrowRight, Info } from "lucide-react";
 import Link from "next/link";
 import { useVisible } from "@/hooks/useVisible";
+import { useAnimatedNumber } from "@/hooks/useAnimatedNumber";
 
 const RESIDENCY_OPTIONS = [
   { value: "resident", label: "UAE Resident" },
@@ -107,6 +108,15 @@ export default function MortgageCalculator() {
   const totalPayment = monthlyPayment * numPayments;
   const totalInterest = totalPayment - loanAmount;
 
+  // Only the results panel eases. The slider readouts on the left stay exact so
+  // they track the thumb — input responds instantly, output animates.
+  const shownMonthly = useAnimatedNumber(monthlyPayment);
+  const shownPurchase = useAnimatedNumber(purchasePrice);
+  const shownDownPayment = useAnimatedNumber(downPaymentAED);
+  const shownLoanAmount = useAnimatedNumber(loanAmount);
+  const shownTotalInterest = useAnimatedNumber(totalInterest);
+  const shownTotalPayment = useAnimatedNumber(totalPayment);
+
   return (
     <section ref={ref} className="section-padding bg-brand-cream">
       <div className="container-site">
@@ -207,8 +217,8 @@ export default function MortgageCalculator() {
               <p className="text-white/50 text-xs font-medium tracking-widest uppercase mb-3">
                 Estimated Monthly Payment
               </p>
-              <div className="font-display text-5xl font-bold text-accent mb-1">
-                {formatAED(monthlyPayment)}
+              <div className="font-display text-5xl font-bold text-accent mb-1 tabular-nums">
+                {formatAED(shownMonthly)}
               </div>
               <p className="text-white/40 text-sm">AED / month</p>
 
@@ -227,14 +237,14 @@ export default function MortgageCalculator() {
             {/* Breakdown cards */}
             <div className="grid grid-cols-2 gap-4">
               {[
-                { label: "Purchase Price", value: formatAED(purchasePrice), unit: "AED" },
-                { label: "Down Payment", value: `${formatAED(downPaymentAED)}`, unit: `AED (${downPaymentPct}%)` },
-                { label: "Loan Amount", value: formatAED(loanAmount), unit: "AED" },
-                { label: "Total Interest", value: formatAED(totalInterest), unit: "AED" },
+                { label: "Purchase Price", value: formatAED(shownPurchase), unit: "AED" },
+                { label: "Down Payment", value: `${formatAED(shownDownPayment)}`, unit: `AED (${downPaymentPct}%)` },
+                { label: "Loan Amount", value: formatAED(shownLoanAmount), unit: "AED" },
+                { label: "Total Interest", value: formatAED(shownTotalInterest), unit: "AED" },
               ].map((item) => (
                 <div key={item.label} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-[0_2px_12px_rgba(10,22,40,0.06)]">
                   <p className="text-gray-400 text-[10px] uppercase tracking-wider mb-2">{item.label}</p>
-                  <p className="text-foreground font-bold text-lg leading-tight">{item.value}</p>
+                  <p className="text-foreground font-bold text-lg leading-tight tabular-nums">{item.value}</p>
                   <p className="text-gray-400 text-[10px] mt-0.5">{item.unit}</p>
                 </div>
               ))}
@@ -244,7 +254,7 @@ export default function MortgageCalculator() {
             <div className="bg-accent/10 border border-accent/25 rounded-2xl p-5 flex items-center justify-between">
               <div>
                 <p className="text-gray-500 text-xs uppercase tracking-wider mb-1">Total Repayment</p>
-                <p className="text-foreground font-bold text-2xl font-display">{formatAED(totalPayment)}</p>
+                <p className="text-foreground font-bold text-2xl font-display tabular-nums">{formatAED(shownTotalPayment)}</p>
                 <p className="text-gray-400 text-xs mt-0.5">AED over {loanPeriod} years</p>
               </div>
               <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center shrink-0">
