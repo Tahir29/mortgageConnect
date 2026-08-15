@@ -328,6 +328,13 @@ const companyList = [
     logoTheme: "light",
     tagline: "Mortgage Services Provider",
   },
+  {
+    id: 7,
+    name: "Titan Financial Brokers",
+    logo: "/images/company/tfb.jpeg",
+    logoTheme: "light",
+    tagline: "Mortgage Services Provider",
+  },
 ];
 
 export const companies = companyList;
