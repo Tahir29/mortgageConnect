@@ -27,7 +27,8 @@ const agentList = [
     email: "ehsan@baytech-uae.com",
     linkedin: "https://www.linkedin.com/in/ehsan-jamshidzadeh-ba431915a/",
     image: "/images/agents/Ehsan-Jamshidzadeh.jpeg",
-    specialty: "Refinancing"
+    specialty: "Refinancing",
+    superAgent: false
   },
   {
     id: 2,
@@ -45,7 +46,8 @@ const agentList = [
     email: "zoheb@baytech-uae.com",
     linkedin: "https://www.linkedin.com/in/zoheb-siddiqui-36876087",
     image: "/images/agents/Zoheb-Siddiqui.jpg",
-    specialty: "Refinancing"
+    specialty: "Refinancing",
+    superAgent: false
   },  
   {
     id: 3,
@@ -63,7 +65,8 @@ const agentList = [
     email: "ragab@baytech-uae.com",
     linkedin: "https://www.linkedin.com/in/ragab-mohamed-b74b3625a",
     image: "/images/agents/Ragab.jpg",
-    specialty: "Home Finance"
+    specialty: "Home Finance",
+    superAgent: false
   },
   {
     id: 4,
@@ -81,7 +84,8 @@ const agentList = [
     email: "rumzee@magnifientfutureinvestment.com",
     linkedin: "https://www.linkedin.com/in/mohammed-rumzee-mubarak-430023372/",
     image: "/images/agents/M.Rumzee-Mubarak.jpg",
-    specialty: "Commercial"
+    specialty: "Commercial",
+    superAgent: false
   },
   {
     id: 5,
@@ -99,7 +103,8 @@ const agentList = [
     email: "sooha.rauf@gpmb.ae",
     linkedin: "https://www.linkedin.com/in/soha-butt-456102152/",
     image: "/images/agents/Soha-Butt.jpg",
-    specialty: "Home Finance"
+    specialty: "Home Finance",
+    superAgent: false
   },
   {
     id: 6,
@@ -117,7 +122,8 @@ const agentList = [
     email: "mustafa@newbestcredit.com",
     linkedin: "",
     image: "/images/agents/Mustafa-Shanan.jpg",
-    specialty: "Islamic Finance"
+    specialty: "Islamic Finance",
+    superAgent: false
   },
   {
     id: 7,
@@ -135,7 +141,8 @@ const agentList = [
     email: "kiran@baytech-uae.com",
     linkedin: "https://www.linkedin.com/in/kiran-vinodan-a38524161",
     image: "/images/agents/Kiran-Vinodan.jpeg",
-    specialty: "Home Finance"
+    specialty: "Home Finance",
+    superAgent: true
   },
   {
     id: 8,
@@ -153,7 +160,8 @@ const agentList = [
     email: "raghuveersingh0432@gmail.com",
     linkedin: "https://www.linkedin.com/in/raghuveersingh0432/",
     image: "/images/agents/Raghuveer-Singh.jpeg",
-    specialty: "Home Finance"
+    specialty: "Home Finance",
+    superAgent: false
   },
   {
     id: 9,
@@ -171,7 +179,8 @@ const agentList = [
     email: "kapilpandey561@gmail.com",
     linkedin: "https://www.linkedin.com/in/kapilpandey04/",
     image: "/images/agents/Kapil-Pandey.jpeg",
-    specialty: "Home Finance"
+    specialty: "Home Finance",
+    superAgent: false
   },
   {
     id: 10,
@@ -189,7 +198,8 @@ const agentList = [
     email: "manojkuchandxb@gmail.com",
     linkedin: "https://www.linkedin.com/in/manoj-kuchan317/",
     image: "/images/agents/Manoj-Kuchan.jpeg",
-    specialty: "Home Finance"
+    specialty: "Home Finance",
+    superAgent: false
   },
   {
     id: 11,
@@ -207,7 +217,27 @@ const agentList = [
     email: "devonmundi7@gmail.com",
     linkedin: "https://www.linkedin.com/in/mundi-devon/",
     image: "/images/agents/Devon-Mundi.jpeg",
-    specialty: "Home Finance"
+    specialty: "Commercial & Home Finance",
+    superAgent: true
+  },
+  {
+    id: 12,
+    name: "Aditya Gupta",
+    role: "Mortgage Consultant",
+    company: "Titan Financial Brokers",
+    languages: ["English", "Hindi"],
+    location: "Dubai",
+    rating: 4.8,
+    reviews: 22,
+    experience: "3 Years",
+    business: "4M Per Month",
+    phone: "+971 050 493 2807",
+    whatsapp: "9710504932807",
+    email: "Aditya.gupta@titanfinance.ae ",
+    linkedin: "https://www.linkedin.com/in/aditya-gupta-584902341",
+    image: "/images/agents/Aditya-Gupta.jpeg",
+    specialty: "Commercial",
+    superAgent: false
   },
   // {
   //   name: "Sarah Al Mansoori",

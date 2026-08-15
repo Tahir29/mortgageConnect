@@ -131,10 +131,17 @@ export default async function AgentProfile({ params }) {
 
             {/* Identity */}
             <div className="flex-1 min-w-0">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[11px] font-medium mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                Verified Agent
-              </span>
+              <div className="flex items-center justify-start gap-4 flex-wrap">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[11px] font-medium mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  Verified Agent
+                </span>
+                {agent.superAgent === true && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[11px] font-medium mb-4 animate-pulse">
+                    Super Agent
+                  </span>
+                )}
+              </div>
               <h1 className="font-display text-4xl md:text-5xl font-semibold text-white leading-tight">
                 {agent.name}
               </h1>

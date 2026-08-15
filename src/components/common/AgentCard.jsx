@@ -40,10 +40,17 @@ export default function AgentCard({ agent, index, visible }) {
             <LinkedInIcon />
           </a>
         )}
-        <span className="absolute top-4 left-4 flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-medium">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          Verified
-        </span>
+        <div className="absolute top-4 left-4 flex items-center justify-center gap-2">
+          <span className="flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-medium">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            Verified
+          </span>
+          {agent.superAgent === true && (
+            <span className="px-2 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-medium animate-pulse">
+              Super Agent
+            </span>
+          )}
+        </div>
         <div className="absolute -bottom-10 left-6">
           {agent.image ? (
             <Image
