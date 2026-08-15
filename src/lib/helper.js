@@ -14,7 +14,7 @@ const agentList = [
   {
     id: 1,
     name: "Ehsan Jamshidzadeh",
-    role: "Mortgage Consultant",
+    role: "Managing Director",
     company: "Baytech Mortgage Broker",
     languages: ["English", "Arabic", "Hindi"],
     location: "Dubai",
@@ -33,7 +33,7 @@ const agentList = [
   {
     id: 2,
     name: "Zoheb Siddiqui",
-    role: "Mortgage Consultant",
+    role: "Business Development Manager",
     company: "Baytech Mortgage Broker",
     languages: ["English", "Hindi", "Urdu"],
     location: "Dubai",
