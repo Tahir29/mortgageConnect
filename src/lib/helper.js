@@ -233,27 +233,69 @@ const agentList = [
     business: "4M Per Month",
     phone: "+971 050 493 2807",
     whatsapp: "9710504932807",
-    email: "Aditya.gupta@titanfinance.ae ",
+    email: "aditya.gupta@titanfinance.ae",
     linkedin: "https://www.linkedin.com/in/aditya-gupta-584902341",
     image: "/images/agents/Aditya-Gupta.jpeg",
     specialty: "Commercial",
     superAgent: false
   },
-  // {
-  //   name: "Sarah Al Mansoori",
-  //   role: "Home Finance Advisor",
-  //   company: "Emirates NBD",
-  //   languages: ["Arabic", "English"],
-  //   location: "Abu Dhabi",
-  //   rating: 5.0,
-  //   reviews: 43,
-  //   experience: "10 Years",
-  //   phone: "+971 50 000 0000",
-  //   whatsapp: "971500000000",
-  //   email: "",
-  //   image: "",
-  //   specialty: "Islamic Finance"
-  // },
+  {
+    id: 13,
+    name: "Sridhara Krishna",
+    role: "Mortgage Consultant",
+    company: "Our Nest",
+    languages: ["Tamil", "English", "Telugu", "Malayalam"],
+    location: "Dubai",
+    rating: 4.8,
+    reviews: 22,
+    experience: "3 Years",
+    business: "2-3M Per Month",
+    phone: "+971 056 298 4310",
+    whatsapp: "9710504932807",
+    email: "sridhara@ournest.ae",
+    linkedin: "https://www.linkedin.com/in/sridhara-krishna-r-139810222/",
+    image: "/images/agents/Sridhara-Krishna.jpeg",
+    specialty: "Commercial",
+    superAgent: false
+  },
+  {
+    id: 14,
+    name: "Sreerag Sreesan",
+    role: "Mortgage Consultant",
+    company: "Our Nest",
+    languages: ["Tamil", "English", "Tamil", "Malayalam"],
+    location: "Dubai",
+    rating: 4.8,
+    reviews: 22,
+    experience: "3 Years",
+    business: "2-3M Per Month",
+    phone: "+971 050 328 4556",
+    whatsapp: "9710504932807",
+    email: "sreerag@ournest.ae",
+    linkedin: "https://www.linkedin.com/in/sreerag-sreesan-578180226",
+    image: "/images/agents/Sreerag-Sreesan.jpeg",
+    specialty: "Commercial",
+    superAgent: false
+  },
+  {
+    id: 15,
+    name: "Anjitha Santhosh",
+    role: "Mortgage Consultant",
+    company: "Our Nest",
+    languages: ["Tamil", "English", "Tamil", "Malayalam"],
+    location: "Dubai",
+    rating: 4.8,
+    reviews: 22,
+    experience: "3 Years",
+    business: "20M Monthly 7-8M",
+    phone: "+971 056 870 3455",
+    whatsapp: "9710504932807",
+    email: "anjitha@ournest.ae",
+    linkedin: "https://www.linkedin.com/in/anjitha-santhosh-784877189",
+    image: "/images/agents/Anjitha-Santhosh.jpeg",
+    specialty: "Commercial",
+    superAgent: false
+  }
 ];
 
 // Slugs are derived rather than hand-written so they can never drift from the name.
@@ -335,6 +377,13 @@ const companyList = [
     logoTheme: "light",
     tagline: "Mortgage Services Provider",
   },
+  {
+    id: 8,
+    name: "Our Nest",
+    logo: "/images/company/OurNest.jpeg",
+    logoTheme: "light",
+    tagline: "Mortgage Services Provider",
+  }
 ];
 
 export const companies = companyList;
