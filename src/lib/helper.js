@@ -287,14 +287,14 @@ const agentList = [
     rating: 4.8,
     reviews: 22,
     experience: "3 Years",
-    business: "20M Monthly 7-8M",
+    business: "20M, Monthly 7-8M",
     phone: "+971 056 870 3455",
     whatsapp: "9710504932807",
     email: "anjitha@ournest.ae",
     linkedin: "https://www.linkedin.com/in/anjitha-santhosh-784877189",
     image: "/images/agents/Anjitha-Santhosh.jpeg",
     specialty: "Commercial",
-    superAgent: false
+    superAgent: true
   }
 ];
 
