@@ -287,7 +287,7 @@ const agentList = [
     rating: 4.8,
     reviews: 22,
     experience: "3 Years",
-    business: "20M, Monthly 7-8M",
+    business: "7-8M Monthly",
     phone: "+971 056 870 3455",
     whatsapp: "9710504932807",
     email: "anjitha@ournest.ae",
@@ -295,6 +295,25 @@ const agentList = [
     image: "/images/agents/Anjitha-Santhosh.jpeg",
     specialty: "Commercial",
     superAgent: true
+  },
+  {
+    id: 16,
+    name: "Sajid Monsoori",
+    role: "Mortgage Consultant",
+    company: "Elite Equity Financial Broker LLC",
+    languages: ["English", "Hindi", "Urdu"],
+    location: "Dubai",
+    rating: 4.8,
+    reviews: 22,
+    experience: "3 Years",
+    business: "2-3M Monthly Approx",
+    phone: "+971 056 910 8712",
+    whatsapp: "9710504932807",
+    email: "sajid.monsoori@gmail.com",
+    linkedin: "https://www.linkedin.com/in/sajid-monsoori-2442202aa/",
+    image: "/images/agents/Sajid-Monsoori.jpeg",
+    specialty: "Commercial",
+    superAgent: false
   }
 ];
 
@@ -381,6 +400,13 @@ const companyList = [
     id: 8,
     name: "Our Nest",
     logo: "/images/company/OurNest.jpeg",
+    logoTheme: "light",
+    tagline: "Mortgage Services Provider",
+  },
+  {
+    id: 9,
+    name: "Elite Equity Financial Broker LLC",
+    logo: "/images/company/EEFB-light.jpeg",
     logoTheme: "light",
     tagline: "Mortgage Services Provider",
   }
