@@ -191,12 +191,18 @@ export default async function AgentProfile({ params }) {
 
               <div className="h-px bg-gray-100 my-8" />
 
-              <p className="text-gray-500 text-sm leading-relaxed">
-                {agent.name} is a verified mortgage consultant listed on Mortgage Connect UAE,
-                operating out of {agent.location} with {agent.company}. All listed professionals are
-                screened before appearing on the platform. Mortgage Connect does not charge you a fee
-                and takes no commission — you deal with {agent.name.split(" ")[0]} directly.
-              </p>
+              {agent.bio !== "" ?
+                <p className="text-gray-500 text-sm leading-relaxed whitespace-pre-line">
+                  {agent.bio}
+                </p>
+                :
+                <p className="text-gray-500 text-sm leading-relaxed">
+                  {agent.name} is a verified mortgage consultant listed on Mortgage Connect UAE,
+                  operating out of {agent.location} with {agent.company}. All listed professionals are
+                  screened before appearing on the platform. Mortgage Connect does not charge you a fee
+                  and takes no commission — you deal with {agent.name.split(" ")[0]} directly.
+                </p>
+              } 
             </div>
 
             {/* Contact card */}

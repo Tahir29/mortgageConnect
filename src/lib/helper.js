@@ -28,7 +28,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/ehsan-jamshidzadeh-ba431915a/",
     image: "/images/agents/Ehsan-Jamshidzadeh.jpeg",
     specialty: "Refinancing",
-    superAgent: false
+    superAgent: false,
+    bio: ""
   },
   {
     id: 2,
@@ -47,7 +48,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/zoheb-siddiqui-36876087",
     image: "/images/agents/Zoheb-Siddiqui.jpg",
     specialty: "Refinancing",
-    superAgent: false
+    superAgent: false,
+    bio: "Zoheb Siddiqui is a UAE-based Business Development professional with 1 year and 4 months of experience in the mortgage sector. With approximately AED 15M in monthly business, he works closely with clients to understand their property-financing requirements and connect them with suitable mortgage solutions.\n\nZoheb focuses on building strong client relationships and providing clear guidance throughout the financing journey. His ability to communicate in English, Hindi and Urdu enables him to support a diverse range of clients across the UAE."
   },  
   {
     id: 3,
@@ -66,7 +68,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/ragab-mohamed-b74b3625a",
     image: "/images/agents/Ragab.jpg",
     specialty: "Home Finance",
-    superAgent: false
+    superAgent: false,
+    bio: "Ragab Mohamed is a UAE-based Mortgage Consultant helping clients navigate their property-financing journey with clarity and confidence. As part of the Mortgage Connect network of verified mortgage professionals, Ragab supports clients in exploring suitable mortgage and financing options based on their individual requirements.\n\nHe assists clients throughout the mortgage process, from understanding their financing needs and exploring available loan options to navigating the application and documentation requirements. His approach is focused on providing clear information and practical guidance, helping clients make informed decisions when purchasing property or exploring refinancing opportunities.\n\nWith the UAE mortgage market offering a wide range of financing solutions, Ragab works to make the process easier to understand and more straightforward for his clients. His ability to communicate in both Arabic and English allows him to support a diverse range of clients in the UAE."
   },
   {
     id: 4,
@@ -85,7 +88,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/mohammed-rumzee-mubarak-430023372/",
     image: "/images/agents/M.Rumzee-Mubarak.jpg",
     specialty: "Commercial",
-    superAgent: false
+    superAgent: false,
+    bio: "M. Rumzee Mubarak is a UAE-based Mortgage Consultant dedicated to helping clients navigate the property-financing process with clarity and confidence. He works with clients to understand their financial requirements, explore suitable mortgage options and navigate the documentation and application process involved in securing property finance.\n\nRumzee takes a client-focused approach, helping buyers and property investors better understand their financing options and the key requirements involved in a mortgage application. His ability to communicate in multiple languages allows him to support clients from a wide range of backgrounds and provide guidance throughout their mortgage journey.\n\nWhether clients are purchasing a home, investing in property or exploring their available financing options, Rumzee aims to make the mortgage process straightforward, transparent and easy to understand."
   },
   {
     id: 5,
@@ -104,7 +108,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/soha-butt-456102152/",
     image: "/images/agents/Soha-Butt.jpg",
     specialty: "Home Finance",
-    superAgent: false
+    superAgent: false,
+    bio: "Soha Butt is a Dubai-based Mortgage Consultant with professional experience in the UAE mortgage industry. She supports clients throughout the mortgage journey, helping them understand financing options, documentation requirements and the lending process. Soha focuses on building strong client relationships and providing practical assistance throughout mortgage applications. Her experience within the mortgage sector enables her to work with clients from different backgrounds and help them navigate UAE property-financing requirements."
   },
   {
     id: 6,
@@ -123,7 +128,8 @@ const agentList = [
     linkedin: "",
     image: "/images/agents/Mustafa-Shanan.jpg",
     specialty: "Islamic Finance",
-    superAgent: false
+    superAgent: false,
+    bio: "Mustafa Shanan is a UAE-based Mortgage Consultant with 5 years of experience in the mortgage and property-financing sector. With AED 3M in monthly business, he helps clients explore suitable mortgage solutions and navigate the financing process with clear and practical guidance.\n\nMustafa focuses on understanding each client’s requirements and supporting them through the mortgage journey, from exploring financing options to completing the application process."
   },
   {
     id: 7,
@@ -142,7 +148,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/kiran-vinodan-a38524161",
     image: "/images/agents/Kiran-Vinodan.jpeg",
     specialty: "Home Finance",
-    superAgent: true
+    superAgent: true,
+    bio: "Kiran Vinodan is a UAE-based Mortgage Consultant and Superagent with 2 years and 6 months of experience in the mortgage industry. With AED 75M in annual business completed, he supports clients in finding suitable mortgage solutions and navigating the property-financing process.\n\nKiran provides clear and personalised guidance throughout the mortgage journey, helping clients understand their financing options and requirements. His multilingual communication skills allow him to serve a diverse range of clients across the UAE."
   },
   {
     id: 8,
@@ -161,7 +168,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/raghuveersingh0432/",
     image: "/images/agents/Raghuveer-Singh.jpeg",
     specialty: "Home Finance",
-    superAgent: false
+    superAgent: false,
+    bio: "Raghuveer Singh is a UAE-based financial professional with experience in banking, wealth advisory and financial services. Based in Dubai, he works with clients to understand their financial requirements and identify suitable financing solutions for property and other financial needs. His approach focuses on understanding each client’s objectives, simplifying complex financial processes and providing practical guidance throughout the financing journey. With a strong understanding of the UAE market and a client-focused approach, Raghuveer supports both individuals and investors in making informed financing decisions."
   },
   {
     id: 9,
@@ -180,7 +188,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/kapilpandey04/",
     image: "/images/agents/Kapil-Pandey.jpeg",
     specialty: "Home Finance",
-    superAgent: false
+    superAgent: false,
+    bio: "Kapil Pandey is a Dubai-based Mortgage Consultant with experience in mortgage and property finance. He assists property owners, investors and businesses with residential and commercial financing requirements, including mortgages, refinancing, loan-against-property and equity-based solutions.\n\nKapil focuses on understanding the client’s financial requirement and identifying suitable financing structures based on lender eligibility and approval criteria. His client-focused approach aims to make the financing process straightforward, transparent and professionally managed from initial consultation through to completion."
   },
   {
     id: 10,
@@ -199,7 +208,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/manoj-kuchan317/",
     image: "/images/agents/Manoj-Kuchan.jpeg",
     specialty: "Home Finance",
-    superAgent: false
+    superAgent: false,
+    bio: "Manoj Kuchan is a Dubai-based financial-services professional with experience in mortgage and financial advisory solutions. As part of Ultron Financials, he works with clients to understand their financing requirements and explore suitable financial solutions. Manoj brings a relationship-focused approach to client advisory, with an emphasis on understanding individual circumstances and providing practical guidance. His multilingual communication skills allow him to work effectively with a diverse client base in the UAE."
   },
   {
     id: 11,
@@ -218,7 +228,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/mundi-devon/",
     image: "/images/agents/Devon-Mundi.jpeg",
     specialty: "Commercial & Home Finance",
-    superAgent: true
+    superAgent: true,
+    bio: "Devon Mundi Nze is a UAE-based Mortgage Consultant and Superagent with 3 years of experience in the mortgage and property-financing sector. With AED 34M in annual business completed, he supports clients in finding suitable mortgage solutions and navigating the financing process from eligibility and documentation to application.\n\nDevon takes a client-focused approach, providing clear and practical guidance to help property buyers and investors make informed financing decisions. He serves clients in both English and French."
   },
   {
     id: 12,
@@ -237,7 +248,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/aditya-gupta-584902341",
     image: "/images/agents/Aditya-Gupta.jpeg",
     specialty: "Commercial",
-    superAgent: false
+    superAgent: false,
+    bio: "Aditya Gupta is a Dubai-based Mortgage Consultant with extensive experience in business development and client relationship management. With more than 11 years of professional experience, Aditya brings a strong sales and business-development background to the UAE mortgage industry. He helps clients understand mortgage options, property financing and the financial considerations involved in purchasing property in Dubai. His approach combines commercial understanding, client communication and practical mortgage guidance to help clients make informed financing decisions."
   },
   {
     id: 13,
@@ -256,7 +268,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/sridhara-krishna-r-139810222/",
     image: "/images/agents/Sridhara-Krishna.jpeg",
     specialty: "Commercial",
-    superAgent: false
+    superAgent: false,
+    bio: "Sridhara Krishna is a Dubai-based Mortgage Consultant with a strong focus on UAE property finance and mortgage advisory. He works with homebuyers, property investors and existing property owners to understand financing requirements and explore suitable mortgage solutions. His professional interests include mortgage pre-approval, home finance, fixed-rate solutions, property financing and equity release. Sridhara takes a structured and informative approach, helping clients understand their financing position before moving forward with a property transaction."
   },
   {
     id: 14,
@@ -275,7 +288,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/sreerag-sreesan-578180226",
     image: "/images/agents/Sreerag-Sreesan.jpeg",
     specialty: "Commercial",
-    superAgent: false
+    superAgent: false,
+    bio: "Sreerag Sreesan is a Dubai-based Mortgage Consultant who helps clients navigate the UAE mortgage and property-finance landscape. After building professional experience in the EdTech sector as an Admission Counselor, Sreerag transitioned into real estate finance and developed expertise in mortgage products, client advisory and financial solutions. He has demonstrated strong performance in the mortgage sector, including achieving AED 20 million in mortgage submissions as a Top Individual Contributor. Sreerag combines a learning-driven mindset with a strong focus on client relationships and delivering practical financing solutions."
   },
   {
     id: 15,
@@ -294,7 +308,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/anjitha-santhosh-784877189",
     image: "/images/agents/Anjitha-Santhosh.jpeg",
     specialty: "Commercial",
-    superAgent: true
+    superAgent: true,
+    bio: "Anjitha Santhosh is a Dubai-based Mortgage Consultant with experience supporting clients with residential property finance and mortgage solutions in the UAE. She focuses on helping clients understand their borrowing options, structure their financing and navigate the mortgage process from initial assessment through to completion. Her areas of client support include home finance, property-backed financing and equity-related solutions. Anjitha believes in providing clear, practical guidance so clients can approach their property-financing decisions with greater confidence."
   },
   {
     id: 16,
@@ -313,7 +328,8 @@ const agentList = [
     linkedin: "https://www.linkedin.com/in/sajid-monsoori-2442202aa/",
     image: "/images/agents/Sajid-Monsoori.jpeg",
     specialty: "Commercial",
-    superAgent: false
+    superAgent: false,
+    bio: "Sajid Monsoori is a UAE-based Mortgage Consultant focused on helping clients navigate the property-financing process with clarity and confidence. He assists clients in understanding mortgage options, eligibility requirements, documentation and the application process. Sajid takes a personalised approach to each client’s requirements, helping them explore suitable financing solutions based on their financial profile and property objectives. His multilingual communication skills enable him to work effectively with a diverse range of clients across the UAE."
   }
 ];
 
