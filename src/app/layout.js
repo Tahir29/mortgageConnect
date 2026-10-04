@@ -20,6 +20,7 @@ const playfair = Playfair_Display({
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mortgageconnect.ae";
 
 export const metadata = {
+  manifest: '/manifest.json',
   metadataBase: new URL(baseUrl),
   title: {
     default: "Mortgage Connect UAE | Find Trusted Mortgage Agents",
