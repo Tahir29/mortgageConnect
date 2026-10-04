@@ -36,7 +36,7 @@ export default function ContactHero() {
             <span className="text-accent">Help You</span>
           </h1>
           <p className="mt-4 text-white/55 text-base md:text-lg max-w-xl leading-relaxed">
-            Have a question about mortgage options, agents, or our platform? Reach out — our team typically responds within a few hours.
+            Have a question about mortgage options, agents, or our platform? Reach out — our team typically responds within a 24 hours.
           </p>
         </div>
       </div>

@@ -12,8 +12,8 @@ const features = [
 ];
 
 const badges = [
-  { value: "5+", label: "Active Agents" },
-  { value: "7", label: "Emirates" },
+  { value: "16", label: "Active Agents" },
+  { value: "3", label: "Emirates" },
   { value: "Free", label: "Always" },
 ];
 
